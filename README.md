@@ -20,4 +20,4 @@ docker compose exec php sh -c '
 '
 ```
 
-teste
+tested
