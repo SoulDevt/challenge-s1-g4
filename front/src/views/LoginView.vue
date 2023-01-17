@@ -1,7 +1,9 @@
 <template>
     <form @submit.prevent="login($event)" class="flex flex-col gap-5">
         <div>
-            <label for="email" class="block text-sm font-medium text-white">Email</label>
+            <label for="email" class="block text-sm font-medium text-white"
+                >Email</label
+            >
             <div class="mt-1">
                 <input
                     type="email"
@@ -13,9 +15,7 @@
             </div>
         </div>
         <div>
-            <label
-                for="password"
-                class="block text-sm font-medium text-white"
+            <label for="password" class="block text-sm font-medium text-white"
                 >Password</label
             >
             <div class="mt-1">
@@ -27,30 +27,22 @@
                 />
             </div>
         </div>
-        <button type="submit" class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Login</button>
+        <button
+            type="submit"
+            class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+            Login
+        </button>
     </form>
 </template>
 
 <script setup>
-import { ENTRYPOINT } from "../../config/entrypoint";
+import { useUserStore } from "../stores/user";
 
 async function login(event) {
     const formData = new FormData(event.target);
-    const response = await fetch(ENTRYPOINT + "/auth", {
-        method: "POST",
-        body: JSON.stringify({
-            email: formData.get("email"),
-            password: formData.get("password"),
-        }),
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-    if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-    } else {
-        console.error("Invalid credentials");
-    }
+    const store = useUserStore();
+    await store.login(formData.get("email"), formData.get("password"));
+    console.log(store.token);
 }
 </script>
