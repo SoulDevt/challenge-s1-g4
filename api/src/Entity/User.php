@@ -34,10 +34,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $firstname = null;
+    private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $lastname = null;
+    private ?string $lastName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $postalAddress = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $phoneNumber = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $postalCode = null;
 
     public function getId(): ?int
     {
@@ -121,26 +130,62 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFirstname(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
-    public function setFirstname(string $firstname): self
+    public function setFirstName(string $firstName): self
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
-    public function getLastname(): ?string
+    public function getLastName(): ?string
     {
-        return $this->lastname;
+        return $this->lastName;
     }
 
-    public function setLastname(string $lastname): self
+    public function setLastName(string $lastName): self
     {
-        $this->lastname = $lastname;
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getPostalAddress(): ?string
+    {
+        return $this->postalAddress;
+    }
+
+    public function setPostalAddress(?string $postalAddress): self
+    {
+        $this->postalAddress = $postalAddress;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?int
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(?int $postalCode): self
+    {
+        $this->postalCode = $postalCode;
 
         return $this;
     }
