@@ -49,7 +49,7 @@
                     class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
                 >
                     <!-- Profile dropdown -->
-                    <Menu as="div" class="relative ml-3">
+                    <Menu as="div" class="relative ml-3" v-if="isConnected">
                         <div>
                             <MenuButton
                                 class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -95,7 +95,7 @@
                                 </MenuItem>
                                 <MenuItem v-slot="{ active }">
                                     <a
-                                        href="#"
+                                        href="/logout"
                                         :class="[
                                             active ? 'bg-gray-100' : '',
                                             'block px-4 py-2 text-sm text-gray-700',
@@ -143,7 +143,11 @@ import {
 } from "@headlessui/vue";
 import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { useRoute } from "vue-router";
-
+let isConnected = false;
+let token = localStorage.getItem("token");
+if (token) {
+    isConnected = true;
+}
 const route = useRoute();
 const navigation = [
     { name: "Home", href: "/", current: route.name === "home" },
