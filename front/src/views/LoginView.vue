@@ -38,11 +38,19 @@
 
 <script setup>
 import { useUserStore } from "../stores/user";
+import jwtDecode from "jwt-decode";
 
 async function login(event) {
     const formData = new FormData(event.target);
     const store = useUserStore();
     await store.login(formData.get("email"), formData.get("password"));
-    console.log(store.token);
+    let decoded = jwtDecode(store.token);
+    localStorage.setItem("token", store.token);
+    if (decoded.roles.includes("ROLE_ADMIN")) {
+        window.location.href = "/admin";
+    } else {
+        window.location.href = "/";
+    }
+
 }
 </script>
