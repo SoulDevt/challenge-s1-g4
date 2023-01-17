@@ -19,3 +19,5 @@ docker compose exec php sh -c '
     setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt
 '
 ```
+
+test
