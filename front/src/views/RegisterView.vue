@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="login($event)" class="flex flex-col gap-5">
+    <form @submit.prevent="register($event)" class="flex flex-col gap-5">
         <div>
             <label for="email" class="block text-sm font-medium text-white"
                 >Email</label
@@ -16,7 +16,7 @@
         </div>
         <div>
             <label for="email" class="block text-sm font-medium text-white"
-                >Name</label
+                >Nom d'utilisateur</label
             >
             <div class="mt-1">
                 <input
@@ -30,7 +30,7 @@
         </div>
         <div>
             <label for="password" class="block text-sm font-medium text-white"
-                >Password</label
+                >Mot de passe</label
             >
             <div class="mt-1">
                 <input
@@ -53,10 +53,14 @@
 <script setup>
 import { useUserStore } from "../stores/user";
 
-async function login(event) {
+async function register(event) {
     const formData = new FormData(event.target);
     const store = useUserStore();
-    await store.login(formData.get("email"), formData.get("password"));
+    await store.register(
+        formData.get("email"),
+        formData.get("name"),
+        formData.get("password")
+    );
     console.log(store.token);
 }
 </script>
