@@ -7,7 +7,6 @@
 
 
 <script setup>
-    import {useUserStore} from "../stores/user";
     import jwtDecode from "jwt-decode";
     let isAdmin = false;
     let token = localStorage.getItem("token");
