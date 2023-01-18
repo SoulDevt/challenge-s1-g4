@@ -26,6 +26,8 @@
     </div>
 </template>
 
+
+
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import {ENTRYPOINT} from "../../config/entrypoint";
