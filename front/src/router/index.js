@@ -36,7 +36,7 @@ const router = createRouter({
       component: RegisterView,
     },
     {
-      path: "/update-user",
+      path: "/update-user/:id",
       name: "update-user",
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -56,6 +56,12 @@ const router = createRouter({
     {
       path: '/profile',
       name: 'profile',
+      component: ProfilView,
+    },
+    {
+      path: '/profile/:id',
+      name: 'profile',
+      props: true,
       component: ProfilView,
     },
     {

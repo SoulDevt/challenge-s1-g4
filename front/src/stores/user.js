@@ -38,7 +38,22 @@ export const useUserStore = defineStore("user", () => {
       throw new Error("Invalid credentials");
     }
   };
-  
+
+  const getUser = async (id) => {
+    const response = await fetch(ENTRYPOINT + `/users/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+    console.log(response)
+    // if (response.ok) {
+    //   token.value = await response.json().then((data) => data.token);
+    // } else {
+    //   throw new Error("Invalid credentials");
+    // }
+  };
+
   const logout = async () => {
     const response = await fetch(ENTRYPOINT + "/auth/logout", {
       method: "POST",
