@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -47,6 +49,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?int $postalCode = null;
+
+    #[ORM\ManyToOne(inversedBy: 'owner')]
+    private ?Items $items = null;
+
+    #[ORM\OneToMany(mappedBy: 'sold', targetEntity: Items::class)]
+    private Collection $itemsold;
+
+    public function __construct()
+    {
+        $this->itemsold = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -186,6 +199,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPostalCode(?int $postalCode): self
     {
         $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    public function getItems(): ?Items
+    {
+        return $this->items;
+    }
+
+    public function setItems(?Items $items): self
+    {
+        $this->items = $items;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Items>
+     */
+    public function getItemsold(): Collection
+    {
+        return $this->itemsold;
+    }
+
+    public function addItemsold(Items $itemsold): self
+    {
+        if (!$this->itemsold->contains($itemsold)) {
+            $this->itemsold->add($itemsold);
+            $itemsold->setSold($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItemsold(Items $itemsold): self
+    {
+        if ($this->itemsold->removeElement($itemsold)) {
+            // set the owning side to null (unless already changed)
+            if ($itemsold->getSold() === $this) {
+                $itemsold->setSold(null);
+            }
+        }
 
         return $this;
     }
