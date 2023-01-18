@@ -12,7 +12,8 @@
                     <div class="mt-4 flex justify-between">
                         <div>
                             <h3 class="text-sm text-gray-700">
-                                <a href="/">
+                                <!-- a href with item.id as param -->
+                                <a :href="'/annonces/' + item.id">
                                     <span aria-hidden="true" class="absolute inset-0" />
                                     {{ item.title }}
                                 </a>

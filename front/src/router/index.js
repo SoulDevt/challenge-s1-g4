@@ -5,7 +5,7 @@ import RegisterView from "../views/RegisterView.vue";
 import UpdateUserView from "../views/UpdateUserView.vue";
 import AdminView from "../views/AdminView.vue";
 import AnnonceView from "../views/AnnonceView.vue";
-
+import ItemsView from "../views/ItemsView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -65,6 +65,11 @@ const router = createRouter({
       path: '/annonces',
       name: 'annonces',
       component: AnnonceView,
+    },
+    {
+      path: '/annonces/:id',
+      name: 'annoncesid',
+      component: ItemsView,
     },
     {
       path: "/:pathMatch(.*)*",
