@@ -19,3 +19,10 @@ docker compose exec php sh -c '
     setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt
 '
 ```
+
+##Fixture
+```bash
+docker compose exec php bin/console d:d:d
+docker compose exec php bin/console d:d:c
+docker compose exec php bin/console d:f:l
+```
