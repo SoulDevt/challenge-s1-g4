@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -47,6 +49,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?int $postalCode = null;
+
+    #[ORM\OneToMany(mappedBy: 'whoUser', targetEntity: DemandeVendor::class, orphanRemoval: true)]
+    private Collection $demandeVendors;
+
+    public function __construct()
+    {
+        $this->demandeVendors = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -186,6 +196,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPostalCode(?int $postalCode): self
     {
         $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DemandeVendor>
+     */
+    public function getDemandeVendors(): Collection
+    {
+        return $this->demandeVendors;
+    }
+
+    public function addDemandeVendor(DemandeVendor $demandeVendor): self
+    {
+        if (!$this->demandeVendors->contains($demandeVendor)) {
+            $this->demandeVendors->add($demandeVendor);
+            $demandeVendor->setWhoUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemandeVendor(DemandeVendor $demandeVendor): self
+    {
+        if ($this->demandeVendors->removeElement($demandeVendor)) {
+            // set the owning side to null (unless already changed)
+            if ($demandeVendor->getWhoUser() === $this) {
+                $demandeVendor->setWhoUser(null);
+            }
+        }
 
         return $this;
     }
