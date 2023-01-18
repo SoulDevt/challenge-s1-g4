@@ -65,44 +65,26 @@ import {ENTRYPOINT} from "../../config/entrypoint";
 
 async function addNewAnnonce(event) {
     const formData = new FormData(event.target);
-    console.log([...event.target.pictures.files]);
-    // const response = await fetch(`${ENTRYPOINT}/items`, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         title: formData.get('title'),
-    //         price: parseInt(formData.get('price')),
-    //         description: formData.get('description'),
-    //         pictures: [event.target.pictures.files],
-    //     }),
-    // });
-    // const data = await response.json();
-    // if (response.status === 201) {
-    //     // window.location.href = '/annonces';
-    //     console.log(data);
-    // } else {
-    //     console.log('ERROR');
-    // }
+    const response = await fetch(`${ENTRYPOINT}/items`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            title: formData.get('title'),
+            price: parseInt(formData.get('price')),
+            description: formData.get('description'),
+            pictures: [event.target.pictures.files],
+        }),
+    });
+    const data = await response.json();
+    if (response.status === 201) {
+        // window.location.href = '/annonces';
+        console.log(data);
+    } else {
+        console.log('ERROR');
+    }
 
-        // const response = await fetch(`${ENTRYPOINT}/users`, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         email,
-        //         name,
-        //         password,
-        //     }),
-        // });
-        // const data = await response.json();
-        // if (response.ok) {
-        //     console.log('OK');
-        // } else {
-        //     console.log('KO');
-        // }
 }
 
 </script>
