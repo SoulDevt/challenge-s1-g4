@@ -49,7 +49,9 @@ async function login(event) {
     if (decoded.roles.includes("ROLE_ADMIN")) {
         window.location.href = "/admin";
     } else {
-        window.location.href = "/";
+        
+        window.location.href = `/profile`;
+        console.log(decoded)
     }
 
 }

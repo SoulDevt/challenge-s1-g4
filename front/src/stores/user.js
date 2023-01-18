@@ -38,7 +38,7 @@ export const useUserStore = defineStore("user", () => {
       throw new Error("Invalid credentials");
     }
   };
-
+  
   const logout = async () => {
     const response = await fetch(ENTRYPOINT + "/auth/logout", {
       method: "POST",

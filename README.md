@@ -21,3 +21,10 @@ docker compose exec php sh -c '
 '
 ```
 
+```bash
+adminer : PostgreSQL
+mot de passe : voir docker
+bd: app
+server: database
+```
+

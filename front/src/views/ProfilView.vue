@@ -1,17 +1,11 @@
 <template>
-    <form @submit.prevent="login($event)" class="flex flex-col gap-5">
+    <form @submit.prevent="getUser($event)" class="flex flex-col gap-5">
         <div>
             <label for="email" class="block text-sm font-medium text-white"
                 >Email</label
             >
             <div class="mt-1">
-                <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    placeholder="you@example.com"
-                />
+                <p>YOUR EMAIL</p>
             </div>
         </div>
         <div>
@@ -19,12 +13,16 @@
                 >Password</label
             >
             <div class="mt-1">
-                <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                />
+                <p>YOUR PASSWORD</p>
+            </div>
+        </div>
+
+        <div>
+            <label for="password" class="block text-sm font-medium text-white"
+                >Name</label
+            >
+            <div class="mt-1">
+                <p>YOUR NAME</p>
             </div>
         </div>
         <button
@@ -40,17 +38,8 @@
 import { useUserStore } from "../stores/user";
 import jwtDecode from "jwt-decode";
 
-async function login(event) {
-    const formData = new FormData(event.target);
-    const store = useUserStore();
-    await store.login(formData.get("email"), formData.get("password"));
-    let decoded = jwtDecode(store.token);
-    localStorage.setItem("token", store.token);
-    if (decoded.roles.includes("ROLE_ADMIN")) {
-        window.location.href = "/admin";
-    } else {
-        window.location.href = "/";
-    }
+async function getUser(event) {
+
 
 }
 </script>
