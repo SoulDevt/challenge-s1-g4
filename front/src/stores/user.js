@@ -31,7 +31,7 @@ export const useUserStore = defineStore("user", () => {
       },
       body: JSON.stringify({ email, password }),
     });
-
+    console.log(response)
     if (response.ok) {
       token.value = await response.json().then((data) => data.token);
     } else {

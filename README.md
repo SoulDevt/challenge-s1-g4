@@ -11,6 +11,7 @@
 ```bash
 docker compose build --pull --no-cache
 docker compose up -d
+docker-compose exec front npm install   
 docker compose exec php sh -c '
     set -e
     apk add openssl
