@@ -1,9 +1,12 @@
 import { defineStore } from "pinia";
 import { ENTRYPOINT } from "../../config/entrypoint";
 import { ref } from "vue";
+import { useRoute } from 'vue-router';
+
 
 export const useUserStore = defineStore("user", () => {
   const token = ref(null);
+  const idUser = ref(null)
   const register = async (email, name, password) => {
     const response = await fetch(`${ENTRYPOINT}/users`, {
       method: "POST",
@@ -39,20 +42,29 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const getUser = async (id) => {
-    const response = await fetch(ENTRYPOINT + `/users/${id}`, {
-      method: "GET",
+  const updateUser = async (email, name, password) => {
+    const route = useRoute();
+    idUser.value = route.params.id;
+    console.log(idUser)
+    const response = await fetch(ENTRYPOINT + `/users/${idUser.value}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
-      }
+      },
+      body: JSON.stringify({
+        email,
+        name,
+        password,
+      }),
     });
-    console.log(response)
-    // if (response.ok) {
-    //   token.value = await response.json().then((data) => data.token);
-    // } else {
-    //   throw new Error("Invalid credentials");
-    // }
+    if (response.ok) {
+      console.log("User updated successfully");
+      //await login(email, password);
+    } else {
+      throw new Error(response.statusText);
+    }
   };
+
 
   const logout = async () => {
     const response = await fetch(ENTRYPOINT + "/auth/logout", {
@@ -71,5 +83,6 @@ export const useUserStore = defineStore("user", () => {
     register,
     login,
     logout,
+    updateUser
   };
 });

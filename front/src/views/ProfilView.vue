@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="editUser($event)" class="flex flex-col gap-5">
+    <form @submit.prevent="editUser(idUser)" class="flex flex-col gap-5">
         <div>
             <label for="email" class="block text-sm font-medium text-white"
                 >Email</label
@@ -39,21 +39,22 @@
     import { ENTRYPOINT } from "../../config/entrypoint";
     import { ref } from "vue";
     import { useRoute } from 'vue-router';
+
+    const route = useRoute(); 
     const email = ref(null)
     const name = ref(null)
     const roles = ref(null)
     const idUser = ref(null)
+    
+
     const getUser = async () => {
-        const route = useRoute(); 
-        const id = route.params.id;
         idUser.value = route.params.id;
-        const response = await fetch(ENTRYPOINT + `/users/${id}`, {
+        const response = await fetch(ENTRYPOINT + `/users/${idUser.value}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
         },
         }).then(res => res.json());
-        console.log(response)
         if (response) {
             email.value = response.email;
             name.value = response.name;
@@ -66,8 +67,12 @@
         }
     };
     getUser();
-
+    
+    const editUser = (id) => {
+        window.location.href = `/update-user/${id}`;
+    }
     
 
+    
 
 </script>
