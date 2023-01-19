@@ -42,11 +42,9 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const updateUser = async (email, name, password) => {
-    const route = useRoute();
-    idUser.value = route.params.id;
-    console.log(idUser)
-    const response = await fetch(ENTRYPOINT + `/users/${idUser.value}`, {
+  const updateUser = async (email, name, password, idUser) => {
+    
+    const response = await fetch(ENTRYPOINT + `/users/${idUser}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

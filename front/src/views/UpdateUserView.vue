@@ -52,13 +52,21 @@
 
 <script setup>
 import { useUserStore } from "../stores/user";
+import { useRoute } from 'vue-router';
+import { ref } from "vue";
+const route = useRoute();
+const idUser = ref(null)
+idUser.value = route.params.id
+
+
     async function updateUser(event) {
         const formData = new FormData(event.target);
         const store = useUserStore();
         await store.updateUser(
             formData.get("email"),
             formData.get("name"),
-            formData.get("password")
+            formData.get("password"),
+            idUser.value
         );
         console.log(store.token);
     }
