@@ -154,5 +154,6 @@ const navigation = [
     { name: "Login", href: "/login", current: route.name === "login" },
     { name: "Register", href: "/register", current: route.name === "register" },
     { name: "Demande", href: "/upgrade-vendor", current: route.name === "upgrade-vendor" },
+    { name: "Pannel demande", href: "/pannel-upgrade-vendor", current: route.name === "pannel-upgrade-vendor" },
 ];
 </script>
