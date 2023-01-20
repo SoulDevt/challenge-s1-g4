@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="upgradeVendor($event)" class="flex flex-col gap-5">
+    <form @submit.prevent="upgradeVendor(idUser)" class="flex flex-col gap-5">
         <div>
             <label for="lastname" class="block text-sm font-medium text-white"
                 >Nom</label
