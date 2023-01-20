@@ -2,25 +2,20 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Patch;
-use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
-use App\Repository\DemandeVendorRepository;
+use App\Repository\DemandeRepository;
 
-#[ORM\Entity(repositoryClass: DemandeVendorRepository::class)]
+#[ORM\Entity(repositoryClass: DemandeRepository::class)]
 #[ApiResource]
-//#[Get,Post,Delete,Patch]
-class DemandeVendor
+class Demande
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'demandeVendors')]
+    #[ORM\ManyToOne(inversedBy: 'demandes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $whoUser = null;
 

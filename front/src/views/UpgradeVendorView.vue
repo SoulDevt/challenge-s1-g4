@@ -49,13 +49,11 @@
 
 <script setup>
 import { ENTRYPOINT } from "../../config/entrypoint";
-import { useUserStore } from "../stores/user";
 import jwtDecode from "jwt-decode";
 
 async function askUpgradeVendor(event) {
     const formData = new FormData(event.target);
     let decoded = jwtDecode(localStorage.getItem("token"));
-    console.log(decoded.id);
     // PUT request using fetch with async/await
     const requestOptions = {
         method: "POST",
@@ -70,13 +68,10 @@ async function askUpgradeVendor(event) {
             phonenumber: formData.get("tel")
         })
     };
-
-    console.log(requestOptions.body);
-    console.log(ENTRYPOINT + `/demande_vendors`);
-    const response = await fetch(ENTRYPOINT + `/demande_vendors`, requestOptions);
+    const response = await fetch(ENTRYPOINT + `/demandes`, requestOptions);
     const data = await response.json();
-    console.log(data.id);
     if (data.id) {
         alert("Votre demande a bien été prise en compte");
     }
+}
 </script>
