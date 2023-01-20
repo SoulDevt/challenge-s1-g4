@@ -8,37 +8,45 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ItemsRepository::class)]
-#[ApiResource]
+#[ApiResource(normalizationContext: ['groups' => ['items_read']])]
 class Items
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('items_read')]
     private ?int $id = null;
 
+    #[Groups('items_read')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $title = null;
 
+    #[Groups('items_read')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
+    #[Groups('items_read')]
     #[ORM\Column(nullable: true)]
     private ?int $price = null;
 
     #[ORM\OneToMany(mappedBy: 'items', targetEntity: User::class)]
     private Collection $owner;
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    private array $pictures = [];
-
+    #[Groups('items_read')]
     #[ORM\ManyToOne(inversedBy: 'itemsold')]
     private ?User $sold = null;
+
+    #[Groups('items_read')]
+    #[ORM\OneToMany(mappedBy: 'items', targetEntity: MediaObject::class)]
+    private Collection $images;
 
     public function __construct()
     {
         $this->owner = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,18 +120,6 @@ class Items
         return $this;
     }
 
-    public function getPictures(): array
-    {
-        return $this->pictures;
-    }
-
-    public function setPictures(?array $pictures): self
-    {
-        $this->pictures = $pictures;
-
-        return $this;
-    }
-
     public function getSold(): ?User
     {
         return $this->sold;
@@ -132,6 +128,36 @@ class Items
     public function setSold(?User $sold): self
     {
         $this->sold = $sold;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MediaObject>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(MediaObject $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setItems($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(MediaObject $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getItems() === $this) {
+                $image->setItems(null);
+            }
+        }
 
         return $this;
     }

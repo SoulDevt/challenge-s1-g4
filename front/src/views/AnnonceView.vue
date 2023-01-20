@@ -7,7 +7,7 @@
             <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 <div v-for="item in items" :key="item.id" class="group relative">
                     <div class="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
-                        <img :src="item.pictures[0]" class="h-full w-full object-cover object-center lg:h-full lg:w-full" />
+                        <img :src="item.images[0].filePath" class="h-full w-full object-cover object-center lg:h-full lg:w-full" />
                     </div>
                     <div class="mt-4 flex justify-between">
                         <div>
@@ -18,6 +18,7 @@
                                     {{ item.title }}
                                 </a>
                             </h3>
+
                         </div>
                         <p class="text-sm font-medium text-gray-900">{{ item.price }}€</p>
                     </div>
@@ -39,6 +40,7 @@ const getItems = async () => {
     );
     const data = await response.json();
     items.value = data["hydra:member"];
+    console.log(data);
 };
 
 onBeforeMount(getItems);

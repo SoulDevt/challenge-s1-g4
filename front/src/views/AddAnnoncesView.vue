@@ -42,10 +42,10 @@
             <div class="mt-1">
                 <input
                     type="file"
-                    name="pictures"
-                    id="pictures"
+                    name="file"
+                    id="file"
                     class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    multiple="multiple"
+                    @change="uploadFile($event)"
                 />
             </div>
         </div>
@@ -62,29 +62,86 @@
 
 import {useUserStore} from "../stores/user";
 import {ENTRYPOINT} from "../../config/entrypoint";
+import { reactive, toRaw, ref } from "vue";
+let token = localStorage.getItem("token");
+let files = reactive([]);
+const fd = ref(new FormData());
+async function uploadFile(event) {
+    const formData = new FormData();
+    formData.append("file", event.target.files[0]);
+    fd.value = formData;
+}
 
 async function addNewAnnonce(event) {
-    const formData = new FormData(event.target);
-    const response = await fetch(`${ENTRYPOINT}/items`, {
-        method: 'POST',
+    console.log(fd.value.get('file'));
+    const mediaResponse = await fetch(ENTRYPOINT + "/media_objects", {
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json',
+            Authorization: "Bearer " + token,
+        },
+        body: fd.value,
+    }).then((response) => response.json());
+
+    const annonceResponse = await fetch(ENTRYPOINT + "/items", {
+        method: "POST",
+        headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            title: formData.get('title'),
-            price: parseInt(formData.get('price')),
-            description: formData.get('description'),
-            pictures: [event.target.pictures.files],
+            title: event.target.title.value,
+            description: event.target.description.value,
+            price: event.target.price.valueAsNumber,
+            images: [mediaResponse["@id"]],
         }),
-    });
-    const data = await response.json();
-    if (response.status === 201) {
-        // window.location.href = '/annonces';
-        console.log(data);
-    } else {
-        console.log('ERROR');
-    }
+    }).then((response) => response.json());
 
 }
+
+
+// async function addNewAnnonce(event) {
+//     const formData = new FormData(event.target);
+//     let token = localStorage.getItem("token");
+//     console.log(formData.get('file'));
+//
+//
+//
+//
+//     // const response = await fetch(ENTRYPOINT + "/media_objects", {
+//     //     method: "POST",
+//     //     headers: {
+//     //         Authorization: "Bearer " + token,
+//     //     },
+//     //     body: JSON.stringify({
+//     //         file: formData.get('file'),
+//     //     }),
+//     // });
+//     //
+//
+//
+//
+//
+//     // console.log(event.target.pictures.files);
+//     // const response = await fetch(`${ENTRYPOINT}/items`, {
+//     //     method: 'POST',
+//     //     headers: {
+//     //         'Content-Type': 'application/json',
+//     //     },
+//     //     body: JSON.stringify({
+//     //         title: formData.get('title'),
+//     //         price: parseInt(formData.get('price')),
+//     //         description: formData.get('description'),
+//     //         pictures: event.target.pictures.files,
+//     //     }),
+//     // });
+//     // const data = await response.json();
+//     // if (response.status === 201) {
+//     //     // window.location.href = '/annonces';
+//     //     console.log(data);
+//     // } else {
+//     //     console.log('ERROR');
+//     // }
+//
+// }
 
 </script>
