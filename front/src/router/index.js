@@ -7,6 +7,7 @@ import AdminView from "../views/AdminView.vue";
 import AnnonceView from "../views/AnnonceView.vue";
 import ItemsView from "../views/ItemsView.vue";
 import AddAnnonceView from "../views/AddAnnoncesView.vue";
+import AddPubTypeView from "../views/AddPubTypeView.vue";
 
 
 const router = createRouter({
@@ -78,6 +79,11 @@ const router = createRouter({
       path: '/annonces/create',
       name: 'annonces_new',
       component: AddAnnonceView,
+    },
+    {
+      path: '/pub/create',
+      name: 'create_pub',
+      component: AddPubTypeView,
     },
     {
       path: "/:pathMatch(.*)*",

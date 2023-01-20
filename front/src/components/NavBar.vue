@@ -153,6 +153,7 @@ const navigation = [
     { name: "Home", href: "/", current: route.name === "home" },
     { name: "Login", href: "/login", current: route.name === "login" },
     { name: "Register", href: "/register", current: route.name === "register" },
-    { name: "Annonces", href:"/annonces", current: route.name === "annonces"}
+    { name: "Annonces", href:"/annonces", current: route.name === "annonces"},
+    { name: "AddPubType", href:"/pub/create", current: route.name === "create_pub"}
 ];
 </script>
