@@ -1,8 +1,8 @@
 <template>
     <div className="grid gap-4 grid-cols-3 grid-rows-3 mt-2">
-        <DemandsItem v-for="demande in demandes" :key="demande.id" :type="demande.type" :firstname="demande.firstname"
-            :lastname="demande.lastname" :adress="demande.adress" :postalcode="demande.postalcode"
-            :phonenumber="demande.phonenumber" :accepted="demande.accepted" />
+        <DemandsItem v-for="demande in demandes" :key="demande.id" :id="demande.id" :type="demande.type"
+            :firstname="demande.firstname" :lastname="demande.lastname" :adress="demande.adress"
+            :postalcode="demande.postalcode" :phonenumber="demande.phonenumber" :accepted="demande.accepted" />
     </div>
 
 </template>

@@ -48,6 +48,7 @@
 </template>
 
 <script setup>
+
 import { ENTRYPOINT } from "../../config/entrypoint";
 import jwtDecode from "jwt-decode";
 
