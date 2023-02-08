@@ -1,17 +1,16 @@
 <template>
-    <div v-for="demande in demandes">
-        {{ demande.type }}
-        {{ demande.firstname }}
-        {{ demande.lastame }}
-        {{ demande.adress }}
-        {{ demande.postalcode }}
-        {{ demande.phonenumber }}
+    <div className="grid gap-4 grid-cols-3 grid-rows-3 mt-2">
+        <DemandsItem v-for="demande in demandes" :key="demande.id" :type="demande.type" :firstname="demande.firstname"
+            :lastname="demande.lastname" :adress="demande.adress" :postalcode="demande.postalcode"
+            :phonenumber="demande.phonenumber" :accepted="demande.accepted" />
     </div>
+
 </template>
 <script setup>
 import { ENTRYPOINT } from "../../config/entrypoint";
 
 import { ref, onBeforeMount } from 'vue';
+import DemandsItem from "../components/DemandsItem.vue";
 
 const demandes = ref([]);
 
