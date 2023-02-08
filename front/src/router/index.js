@@ -6,6 +6,7 @@ import UpdateUserView from "../views/UpdateUserView.vue";
 import AdminView from "../views/AdminView.vue";
 import UpgradeVendorView from "../views/upgradeVendorView.vue";
 import AdminUpgradeDemandsView from "../views/AdminUpgradeDemandsView.vue";
+import AdminCreateAuctionView from "../views/AdminCreateAuction.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,6 +60,14 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: AdminUpgradeDemandsView,
+    },
+        {
+      path: "/pannel-create-auction",
+      name: "pannel-create-auction",
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: AdminCreateAuctionView,
     },
     {
       path: "/greetings",

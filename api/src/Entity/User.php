@@ -54,9 +54,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'whoUser', targetEntity: Demande::class)]
     private Collection $demandes;
 
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Auction::class, orphanRemoval: true)]
+    private Collection $auctions;
+
     public function __construct()
     {
         $this->demandes = new ArrayCollection();
+        $this->auctions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -225,6 +229,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($demande->getWhoUser() === $this) {
                 $demande->setWhoUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Auction>
+     */
+    public function getAuctions(): Collection
+    {
+        return $this->auctions;
+    }
+
+    public function addAuction(Auction $auction): self
+    {
+        if (!$this->auctions->contains($auction)) {
+            $this->auctions->add($auction);
+            $auction->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuction(Auction $auction): self
+    {
+        if ($this->auctions->removeElement($auction)) {
+            // set the owning side to null (unless already changed)
+            if ($auction->getCreator() === $this) {
+                $auction->setCreator(null);
             }
         }
 
