@@ -28,6 +28,9 @@ class Auction
     #[ORM\Column(nullable: true)]
     private ?float $actualPrice = null;
 
+    #[ORM\Column]
+    private ?bool $finished = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +80,18 @@ class Auction
     public function setActualPrice(?float $actualPrice): self
     {
         $this->actualPrice = $actualPrice;
+
+        return $this;
+    }
+
+    public function isFinished(): ?bool
+    {
+        return $this->finished;
+    }
+
+    public function setFinished(bool $finished): self
+    {
+        $this->finished = $finished;
 
         return $this;
     }

@@ -62,7 +62,8 @@ async function addNewAuction(event) {
             creator: `api/users/${decoded.id}`,
             endAt: formData.get("endAt"),
             startPrice: parseFloat(formData.get("startPrice")),
-            actualPrice: null
+            actualPrice: null,
+            finished: false
         })
     };
     const response = await fetch(ENTRYPOINT + `/auctions`, requestOptions);
