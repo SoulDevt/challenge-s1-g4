@@ -15,7 +15,6 @@ class ItemFixtures extends Fixture {
             $item->setTitle($faker->sentence);
             $item->setDescription($faker->paragraph);
             $item->setPrice($faker->numberBetween(1, 1000));
-            $item->setPictures([$faker->imageUrl(), $faker->imageUrl()]);
             $manager->persist($item);
         }
 

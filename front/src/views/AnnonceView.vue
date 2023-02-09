@@ -40,8 +40,9 @@ const getItems = async () => {
     );
     const data = await response.json();
     items.value = data["hydra:member"];
-    console.log(data);
 };
+
+console.log(items);
 
 onBeforeMount(getItems);
 </script>

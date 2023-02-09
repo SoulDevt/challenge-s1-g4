@@ -1,15 +1,14 @@
 <template>
     <div class="allItems">
         <div class="left">
-            <div v-for="image in item.pictures">
-                <img :src="image" alt="image" />
-            </div>
+            <img :src="item.images[0].filePath" alt="image" />
         </div>
-        <div class="right">
+        <div class="right">            
             <h1>{{item.title}}</h1>
-            <p>{{item.price}}</p>
+            <p>{{item.price}}€</p>
             <p>{{item.description}}</p>
         </div>
+        
     </div>
 
 </template>
@@ -18,6 +17,8 @@
 import { onBeforeMount, ref } from "vue";
 import {ENTRYPOINT} from "../../config/entrypoint";
 import { useRoute } from "vue-router";
+
+
 
 const item = ref([]);
 const route = useRoute();
@@ -31,7 +32,15 @@ const getItem = async () => {
 };
 
 onBeforeMount(getItem);
+
+async function buyItem() {
+    console.log('test');
+}
+
+
 </script>
+
+
 
 
 <style>
@@ -41,6 +50,15 @@ onBeforeMount(getItem);
         justify-content: space-between;
         margin: 0 auto;
         width: 80%;
+    }
+
+    .left,
+    .right {
+        width: 50%;
+    }
+
+    .left > img {
+        width: 100%;
     }
 </style>
 
