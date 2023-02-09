@@ -5,6 +5,9 @@ import RegisterView from "../views/RegisterView.vue";
 import UpdateUserView from "../views/UpdateUserView.vue";
 import AdminView from "../views/AdminView.vue";
 import ProfilView from "../views/ProfilView.vue";
+import AnnonceView from "../views/AnnonceView.vue";
+import ItemsView from "../views/ItemsView.vue";
+import AddAnnonceView from "../views/AddAnnoncesView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -72,6 +75,21 @@ const router = createRouter({
         localStorage.clear();
         next({ name: 'home' });
       }
+    },
+    {
+      path: '/annonces',
+      name: 'annonces',
+      component: AnnonceView,
+    },
+    {
+      path: '/annonces/:id',
+      name: 'annoncesid',
+      component: ItemsView,
+    },
+    {
+      path: '/annonces/create',
+      name: 'annonces_new',
+      component: AddAnnonceView,
     },
     {
       path: "/:pathMatch(.*)*",
