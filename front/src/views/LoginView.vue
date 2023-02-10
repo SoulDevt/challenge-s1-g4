@@ -34,6 +34,7 @@
             Login
         </button>
     </form>
+    <RouterLink to="/forgot-password">Mot de passe oublié ?</RouterLink>
 </template>
 
 <script setup>
