@@ -4,12 +4,12 @@ import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import UpdateUserView from "../views/UpdateUserView.vue";
 import AdminView from "../views/AdminView.vue";
+import ProfilView from "../views/ProfilView.vue";
 import AnnonceView from "../views/AnnonceView.vue";
 import ItemsView from "../views/ItemsView.vue";
 import AddAnnonceView from "../views/AddAnnoncesView.vue";
 import PaymentSuccessView from "../views/PaymentSuccessView.vue";
 import PaymentCancelView from "../views/PaymentCanceledView.vue";
-
 
 
 const router = createRouter({
@@ -42,12 +42,23 @@ const router = createRouter({
       component: RegisterView,
     },
     {
-      path: "/update-user",
+      path: "/update-user/:id",
       name: "update-user",
+      props: true,
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: UpdateUserView,
+    },
+    {
+      path: "/forgot-password",
+      name: "forgot-password",
+      component: () => import("../views/ForgotPasswordView.vue"),
+    },
+    {
+      path: "/reset-password/:token",
+      name: "reset-password",
+      component: () => import("../views/ResetPasswordView.vue"),
     },
     {
       path: "/greetings",
@@ -58,6 +69,17 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: AdminView,
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfilView,
+    },
+    {
+      path: '/profile/:id',
+      name: 'profile',
+      props: true,
+      component: ProfilView,
     },
     {
       path: '/logout',
