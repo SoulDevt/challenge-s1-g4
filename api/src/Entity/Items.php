@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ItemsRepository::class)]
-#[ApiResource(normalizationContext: ['groups' => ['items_read']])]
+#[ApiResource(normalizationContext: ['groups' => ['items_read']],  denormalizationContext: ['groups' => ['items_write']])]
 class Items
 {
     #[ORM\Id]
@@ -32,9 +32,6 @@ class Items
     #[ORM\Column(nullable: true)]
     private ?int $price = null;
 
-    #[ORM\OneToMany(mappedBy: 'items', targetEntity: User::class)]
-    private Collection $owner;
-
     #[Groups('items_read')]
     #[ORM\ManyToOne(inversedBy: 'itemsold')]
     private ?User $sold = null;
@@ -42,6 +39,10 @@ class Items
     #[Groups('items_read')]
     #[ORM\OneToMany(mappedBy: 'items', targetEntity: MediaObject::class)]
     private Collection $images;
+
+    #[Groups(['items_read', 'items_write'])]
+    #[ORM\ManyToOne(inversedBy: 'ownerItems')]
+    private ?User $itemOwner = null;
 
     public function __construct()
     {
@@ -93,32 +94,6 @@ class Items
     /**
      * @return Collection<int, User>
      */
-    public function getOwner(): Collection
-    {
-        return $this->owner;
-    }
-
-    public function addOwner(User $owner): self
-    {
-        if (!$this->owner->contains($owner)) {
-            $this->owner->add($owner);
-            $owner->setItems($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOwner(User $owner): self
-    {
-        if ($this->owner->removeElement($owner)) {
-            // set the owning side to null (unless already changed)
-            if ($owner->getItems() === $this) {
-                $owner->setItems(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getSold(): ?User
     {
@@ -158,6 +133,18 @@ class Items
                 $image->setItems(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getItemOwner(): ?User
+    {
+        return $this->itemOwner;
+    }
+
+    public function setItemOwner(?User $itemOwner): self
+    {
+        $this->itemOwner = $itemOwner;
 
         return $this;
     }

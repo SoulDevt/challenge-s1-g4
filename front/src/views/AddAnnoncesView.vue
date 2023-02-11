@@ -61,7 +61,10 @@
 <script setup>
 import {ENTRYPOINT} from "../../config/entrypoint";
 import { reactive, toRaw, ref } from "vue";
+import jwtDecode from "jwt-decode";
 let token = localStorage.getItem("token");
+let decoded = jwtDecode(token);
+
 let files = reactive([]);
 const fd = ref(new FormData());
 async function uploadFile(event) {
@@ -90,10 +93,12 @@ async function addNewAnnonce(event) {
             description: event.target.description.value,
             price: event.target.price.valueAsNumber,
             images: [mediaResponse["@id"]],
+            itemOwner: decoded.id
         }),
-    }).then((response) => response.json())
-    .then(setTimeout(() => {
-        window.location.href = '/annonces';
-    }, 1000));
+    })
+    .then((response) => response.json())
+    // .then(setTimeout(() => {
+    //     window.location.href = '/annonces';
+    // }, 1000));
 }
 </script>

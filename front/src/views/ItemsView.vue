@@ -18,8 +18,6 @@ import { onBeforeMount, ref } from "vue";
 import {ENTRYPOINT} from "../../config/entrypoint";
 import { useRoute } from "vue-router";
 
-
-
 const item = ref([]);
 const route = useRoute();
 const getItem = async () => {
@@ -28,15 +26,11 @@ const getItem = async () => {
     );
     const data = await response.json();
     item.value = data;
-    console.log(data);
 };
 
+console.log(item);
+
 onBeforeMount(getItem);
-
-async function buyItem() {
-    console.log('test');
-}
-
 
 </script>
 
