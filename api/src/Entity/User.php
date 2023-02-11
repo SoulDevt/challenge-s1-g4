@@ -59,9 +59,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'sold', targetEntity: Items::class)]
     private Collection $itemsold;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: AnnoncesPosts::class)]
+    private Collection $annoncesPosts;
+
     public function __construct()
     {
         $this->itemsold = new ArrayCollection();
+        $this->annoncesPosts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -242,6 +246,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($itemsold->getSold() === $this) {
                 $itemsold->setSold(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AnnoncesPosts>
+     */
+    public function getAnnoncesPosts(): Collection
+    {
+        return $this->annoncesPosts;
+    }
+
+    public function addAnnoncesPost(AnnoncesPosts $annoncesPost): self
+    {
+        if (!$this->annoncesPosts->contains($annoncesPost)) {
+            $this->annoncesPosts->add($annoncesPost);
+            $annoncesPost->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnoncesPost(AnnoncesPosts $annoncesPost): self
+    {
+        if ($this->annoncesPosts->removeElement($annoncesPost)) {
+            // set the owning side to null (unless already changed)
+            if ($annoncesPost->getAuthor() === $this) {
+                $annoncesPost->setAuthor(null);
             }
         }
 
