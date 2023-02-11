@@ -4,10 +4,10 @@ import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import UpdateUserView from "../views/UpdateUserView.vue";
 import AdminView from "../views/AdminView.vue";
+import ProfilView from "../views/ProfilView.vue";
 import AnnonceView from "../views/AnnonceView.vue";
 import ItemsView from "../views/ItemsView.vue";
 import AddAnnonceView from "../views/AddAnnoncesView.vue";
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,8 +39,9 @@ const router = createRouter({
       component: RegisterView,
     },
     {
-      path: "/update-user",
+      path: "/update-user/:id",
       name: "update-user",
+      props: true,
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -65,6 +66,17 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: AdminView,
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfilView,
+    },
+    {
+      path: '/profile/:id',
+      name: 'profile',
+      props: true,
+      component: ProfilView,
     },
     {
       path: '/logout',

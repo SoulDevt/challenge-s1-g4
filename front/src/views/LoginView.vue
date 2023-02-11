@@ -40,6 +40,9 @@
 <script setup>
 import { useUserStore } from "../stores/user";
 import jwtDecode from "jwt-decode";
+import ProfilViewVue from "./ProfilView.vue";
+
+
 
 async function login(event) {
     const formData = new FormData(event.target);
@@ -50,7 +53,8 @@ async function login(event) {
     if (decoded.roles.includes("ROLE_ADMIN")) {
         window.location.href = "/admin";
     } else {
-        window.location.href = "/";
+        window.location.href = `/profile/${decoded.id}`;
+
     }
 
 }
