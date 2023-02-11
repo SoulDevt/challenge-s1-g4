@@ -27,7 +27,7 @@
 //import { useUserStore } from "../stores/user";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
-import {ENTRYPOINT} from "../../config/entrypoint";
+import { ENTRYPOINT } from "../../config/entrypoint";
 
 //const store = useUserStore();
 const router = useRouter();
