@@ -59,8 +59,6 @@
 </template>
 
 <script setup>
-
-import {useUserStore} from "../stores/user";
 import {ENTRYPOINT} from "../../config/entrypoint";
 import { reactive, toRaw, ref } from "vue";
 let token = localStorage.getItem("token");
@@ -73,7 +71,6 @@ async function uploadFile(event) {
 }
 
 async function addNewAnnonce(event) {
-    console.log(fd.value.get('file'));
     const mediaResponse = await fetch(ENTRYPOINT + "/media_objects", {
         method: "POST",
         headers: {
@@ -94,54 +91,9 @@ async function addNewAnnonce(event) {
             price: event.target.price.valueAsNumber,
             images: [mediaResponse["@id"]],
         }),
-    }).then((response) => response.json());
-
+    }).then((response) => response.json())
+    .then(setTimeout(() => {
+        window.location.href = '/annonces';
+    }, 1000));
 }
-
-
-// async function addNewAnnonce(event) {
-//     const formData = new FormData(event.target);
-//     let token = localStorage.getItem("token");
-//     console.log(formData.get('file'));
-//
-//
-//
-//
-//     // const response = await fetch(ENTRYPOINT + "/media_objects", {
-//     //     method: "POST",
-//     //     headers: {
-//     //         Authorization: "Bearer " + token,
-//     //     },
-//     //     body: JSON.stringify({
-//     //         file: formData.get('file'),
-//     //     }),
-//     // });
-//     //
-//
-//
-//
-//
-//     // console.log(event.target.pictures.files);
-//     // const response = await fetch(`${ENTRYPOINT}/items`, {
-//     //     method: 'POST',
-//     //     headers: {
-//     //         'Content-Type': 'application/json',
-//     //     },
-//     //     body: JSON.stringify({
-//     //         title: formData.get('title'),
-//     //         price: parseInt(formData.get('price')),
-//     //         description: formData.get('description'),
-//     //         pictures: event.target.pictures.files,
-//     //     }),
-//     // });
-//     // const data = await response.json();
-//     // if (response.status === 201) {
-//     //     // window.location.href = '/annonces';
-//     //     console.log(data);
-//     // } else {
-//     //     console.log('ERROR');
-//     // }
-//
-// }
-
 </script>
