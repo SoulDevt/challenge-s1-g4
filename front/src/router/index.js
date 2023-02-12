@@ -7,6 +7,10 @@ import AdminView from "../views/AdminView.vue";
 import UpgradeVendorView from "../views/upgradeVendorView.vue";
 import AdminUpgradeDemandsView from "../views/AdminUpgradeDemandsView.vue";
 import AdminCreateAuctionView from "../views/AdminCreateAuction.vue";
+import ProfilView from "../views/ProfilView.vue";
+import AnnonceView from "../views/AnnonceView.vue";
+import ItemsView from "../views/ItemsView.vue";
+import AddAnnonceView from "../views/AddAnnoncesView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,8 +42,9 @@ const router = createRouter({
       component: RegisterView,
     },
     {
-      path: "/update-user",
+      path: "/update-user/:id",
       name: "update-user",
+      props: true,
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -61,13 +66,23 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: AdminUpgradeDemandsView,
     },
-        {
+    {
       path: "/pannel-create-auction",
       name: "pannel-create-auction",
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: AdminCreateAuctionView,
+    },
+    {
+      path: "/forgot-password",
+      name: "forgot-password",
+      component: () => import("../views/ForgotPasswordView.vue"),
+    },
+    {
+      path: "/reset-password/:token",
+      name: "reset-password",
+      component: () => import("../views/ResetPasswordView.vue"),
     },
     {
       path: "/greetings",
@@ -80,12 +95,38 @@ const router = createRouter({
       component: AdminView,
     },
     {
+      path: '/profile',
+      name: 'profile',
+      component: ProfilView,
+    },
+    {
+      path: '/profile/:id',
+      name: 'profile',
+      props: true,
+      component: ProfilView,
+    },
+    {
       path: '/logout',
       name: 'logout',
       beforeEnter: (to, from, next) => {
         localStorage.clear();
         next({ name: 'home' });
       }
+    },
+    {
+      path: '/annonces',
+      name: 'annonces',
+      component: AnnonceView,
+    },
+    {
+      path: '/annonces/:id',
+      name: 'annoncesid',
+      component: ItemsView,
+    },
+    {
+      path: '/annonces/create',
+      name: 'annonces_new',
+      component: AddAnnonceView,
     },
     {
       path: "/:pathMatch(.*)*",

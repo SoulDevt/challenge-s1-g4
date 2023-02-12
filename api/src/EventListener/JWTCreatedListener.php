@@ -20,4 +20,5 @@ class JWTCreatedListener {
 
         $event->setHeader($header);
     }
+
 }
