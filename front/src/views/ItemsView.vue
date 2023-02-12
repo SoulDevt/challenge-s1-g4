@@ -11,11 +11,13 @@
             <button v-if="item.isOwner" @click="showPopup">Supprimer mon annonce</button>
         </div>
 
-        <div class="bg_deletePopup" @click="showPopup"></div>
-        <div class="deletePopup">
-            <p>Voulez vous vraiment supprimer votre annone ?</p>
-            <button @click="deleleteItem">Oui</button>
-            <button @click="showPopup">Non</button>
+        <div v-if="item.isOwner">
+            <div class="bg_deletePopup" @click="showPopup"></div>
+            <div class="deletePopup">
+                <p>Voulez vous vraiment supprimer votre annone ?</p>
+                <button @click="deleleteItem">Oui</button>
+                <button @click="showPopup">Non</button>
+            </div>
         </div>
     </div>
 
@@ -124,11 +126,11 @@ async function deleleteItem() {
     padding: 2em;
 }
 
-.deletePopup > button {
+.deletePopup>button {
     margin: 1em;
 }
 
-.deletePopup > button:nth-child(2) {
+.deletePopup>button:nth-child(2) {
     background: red;
     padding: 5px;
     padding-left: 1em;
@@ -137,7 +139,7 @@ async function deleleteItem() {
     border-radius: 12px;
 }
 
-.deletePopup > button:nth-child(3) {
+.deletePopup>button:nth-child(3) {
     background: green;
     padding: 5px;
     padding-left: 1em;
@@ -163,8 +165,5 @@ async function deleleteItem() {
 .hideOverflow {
     overflow: hidden;
 }
-
-
-
 </style>
 
