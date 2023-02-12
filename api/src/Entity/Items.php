@@ -43,6 +43,9 @@ class Items
     #[ORM\OneToMany(mappedBy: 'items', targetEntity: MediaObject::class)]
     private Collection $images;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $stripe_price_id = null;
+
     public function __construct()
     {
         $this->owner = new ArrayCollection();
@@ -158,6 +161,18 @@ class Items
                 $image->setItems(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStripePriceId(): ?string
+    {
+        return $this->stripe_price_id;
+    }
+
+    public function setStripePriceId(?string $stripe_price_id): self
+    {
+        $this->stripe_price_id = $stripe_price_id;
 
         return $this;
     }

@@ -4,25 +4,24 @@
             <img :src="item.images[0].filePath" alt="image" />
         </div>
         <div class="right">
-            <h1>{{item.title}}</h1>
-            <p>{{item.price}}</p>
-            <p>{{item.description}}</p>
+            <h1>{{ item.title }}</h1>
+            <p>{{ item.price }}</p>
+            <p>{{ item.description }}</p>
         </div>
     </div>
-
 </template>
 
 <script setup>
 import { onBeforeMount, ref } from "vue";
-import {ENTRYPOINT} from "../../config/entrypoint";
+import { ENTRYPOINT } from "../../config/entrypoint";
 import { useRoute } from "vue-router";
+import { StripeCheckout } from "@vue-stripe/vue-stripe";
+const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
 
 const item = ref([]);
 const route = useRoute();
 const getItem = async () => {
-    const response = await fetch(
-        ENTRYPOINT + "/items/" + route.params.id
-    );
+    const response = await fetch(ENTRYPOINT + "/items/" + route.params.id);
     const data = await response.json();
     item.value = data;
     console.log(data);
@@ -31,14 +30,12 @@ const getItem = async () => {
 onBeforeMount(getItem);
 </script>
 
-
 <style>
-    .allItems {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        margin: 0 auto;
-        width: 80%;
-    }
+.allItems {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 80%;
+}
 </style>
-
