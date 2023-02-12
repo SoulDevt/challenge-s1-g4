@@ -95,10 +95,9 @@ async function addNewAnnonce(event) {
             images: [mediaResponse["@id"]]
         }),
     })
-    .then((response) => response.json());
-    console.log(annonceResponse);
-    // .then(setTimeout(() => {
-    //     window.location.href = '/annonces';
-    // }, 1000));
+    .then((response) => response.json())
+    .then(setTimeout(() => {
+        window.location.href = '/annonces';
+    }, 1000));
 }
 </script>
