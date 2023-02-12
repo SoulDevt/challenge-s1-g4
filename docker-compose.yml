@@ -29,7 +29,6 @@ services:
       target: prod
     environment:
       VITE_PUBLIC_ENTRYPOINT: http://caddy/api
-      VITE_STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLIC_KEY}
 
   caddy:
     build:
