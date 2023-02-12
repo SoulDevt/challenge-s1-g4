@@ -92,8 +92,7 @@ async function addNewAnnonce(event) {
             title: event.target.title.value,
             description: event.target.description.value,
             price: event.target.price.valueAsNumber,
-            images: [mediaResponse["@id"]],
-            itemOwner:  "/api/users/" + [decoded.id]
+            images: [mediaResponse["@id"]]
         }),
     })
     .then((response) => response.json());

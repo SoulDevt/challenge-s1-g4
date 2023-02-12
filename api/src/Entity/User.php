@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[ApiResource(normalizationContext: ['groups' => ['items_read']])]
+#[ApiResource]
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -56,7 +56,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'sold', targetEntity: Items::class)]
     private Collection $itemsold;
 
-    #[Groups('items_read')]
     #[ORM\OneToMany(mappedBy: 'itemOwner', targetEntity: Items::class)]
     private Collection $ownerItems;
 
@@ -208,6 +207,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getItems(): ?Items
+    {
+        return $this->items;
+    }
+
+    public function setItems(?Items $items): self
+    {
+        $this->items = $items;
+
+        return $this;
+    }
 
     /**
      * @return Collection<int, Items>
