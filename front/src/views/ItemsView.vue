@@ -1,9 +1,7 @@
 <template>
     <div class="allItems">
         <div class="left">
-            <div v-for="image in item.pictures">
-                <img :src="image" alt="image" />
-            </div>
+            <img :src="item.images[0].filePath" alt="image" />
         </div>
         <div class="right">
             <h1>{{item.title}}</h1>
