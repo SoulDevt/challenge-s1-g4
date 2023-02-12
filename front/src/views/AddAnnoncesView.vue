@@ -3,7 +3,7 @@
     <form @submit.prevent="addNewAnnonce($event)">
         <div>
             <label for="title" class="block text-sm font-medium text-white"
-            >Titre</label
+                >Titre</label
             >
             <div class="mt-1">
                 <input
@@ -15,16 +15,22 @@
             </div>
         </div>
         <div>
-            <label for="description" class="block text-sm font-medium text-white"
-            >Description</label
+            <label
+                for="description"
+                class="block text-sm font-medium text-white"
+                >Description</label
             >
             <div class="mt-1">
-                <textarea name="description" id="description" class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+                <textarea
+                    name="description"
+                    id="description"
+                    class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                ></textarea>
             </div>
         </div>
         <div>
             <label for="price" class="block text-sm font-medium text-white"
-            >Prix</label
+                >Prix</label
             >
             <div class="mt-1">
                 <input
@@ -37,7 +43,7 @@
         </div>
         <div>
             <label for="pictures" class="block text-sm font-medium text-white"
-            >images</label
+                >images</label
             >
             <div class="mt-1">
                 <input
@@ -59,10 +65,10 @@
 </template>
 
 <script setup>
-
-import {useUserStore} from "../stores/user";
-import {ENTRYPOINT} from "../../config/entrypoint";
-import { reactive, toRaw, ref } from "vue";
+import { ENTRYPOINT } from "../../config/entrypoint";
+import { useRouter } from "vue-router";
+import { reactive, ref } from "vue";
+import router from "../router";
 let token = localStorage.getItem("token");
 let files = reactive([]);
 const fd = ref(new FormData());
@@ -73,7 +79,7 @@ async function uploadFile(event) {
 }
 
 async function addNewAnnonce(event) {
-    console.log(fd.value.get('file'));
+    console.log(fd.value.get("file"));
     const mediaResponse = await fetch(ENTRYPOINT + "/media_objects", {
         method: "POST",
         headers: {
@@ -94,54 +100,9 @@ async function addNewAnnonce(event) {
             price: event.target.price.valueAsNumber,
             images: [mediaResponse["@id"]],
         }),
-    }).then((response) => response.json());
-
+    });
+    if (annonceResponse.ok) {
+        await router.push("/annonces");
+    }
 }
-
-
-// async function addNewAnnonce(event) {
-//     const formData = new FormData(event.target);
-//     let token = localStorage.getItem("token");
-//     console.log(formData.get('file'));
-//
-//
-//
-//
-//     // const response = await fetch(ENTRYPOINT + "/media_objects", {
-//     //     method: "POST",
-//     //     headers: {
-//     //         Authorization: "Bearer " + token,
-//     //     },
-//     //     body: JSON.stringify({
-//     //         file: formData.get('file'),
-//     //     }),
-//     // });
-//     //
-//
-//
-//
-//
-//     // console.log(event.target.pictures.files);
-//     // const response = await fetch(`${ENTRYPOINT}/items`, {
-//     //     method: 'POST',
-//     //     headers: {
-//     //         'Content-Type': 'application/json',
-//     //     },
-//     //     body: JSON.stringify({
-//     //         title: formData.get('title'),
-//     //         price: parseInt(formData.get('price')),
-//     //         description: formData.get('description'),
-//     //         pictures: event.target.pictures.files,
-//     //     }),
-//     // });
-//     // const data = await response.json();
-//     // if (response.status === 201) {
-//     //     // window.location.href = '/annonces';
-//     //     console.log(data);
-//     // } else {
-//     //     console.log('ERROR');
-//     // }
-//
-// }
-
 </script>

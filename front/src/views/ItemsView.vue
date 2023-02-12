@@ -10,8 +10,12 @@
         </div>
     </div>
     <div>
-        <button @click="buy"
-                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Pay now!</button>
+        <button
+            @click="buy"
+            class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+            Pay now!
+        </button>
     </div>
 </template>
 
@@ -19,16 +23,15 @@
 import { onBeforeMount, ref, reactive } from "vue";
 import { ENTRYPOINT } from "../../config/entrypoint";
 import { useRoute } from "vue-router";
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from "@stripe/stripe-js";
 
-const publishableKey = import.meta.env.VITE_STRIPE_PUBLIC_TEST_KEY;
+const publishableKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
+console.log(publishableKey);
 const stripePromise = loadStripe(publishableKey);
-// TODO changer les URLS pour les bonnes (utiliser les ENV)
-const successURL = "http://localhost/success";
-const cancelURL = "http://localhost/cancel";
-const loading = ref(false);
+const successURL = `https://${window.location.host}/success`;
+const cancelURL = `https://${window.location.host}/cancel`;
+console.log(successURL, cancelURL);
 const item = ref([]);
-const checkoutRef = ref(null);
 const lineItems = reactive([
     {
         price: "",
@@ -58,7 +61,6 @@ async function buy() {
 
 onBeforeMount(getItem);
 </script>
-
 
 <style>
 .allItems {

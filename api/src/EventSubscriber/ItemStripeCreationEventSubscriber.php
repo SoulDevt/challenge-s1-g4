@@ -34,7 +34,7 @@ final class ItemStripeCreationEventSubscriber implements EventSubscriberInterfac
             return;
         }
 
-        $stripe = new StripeClient($_ENV['STRIPE_SECRET_TEST_KEY']);
+        $stripe = new StripeClient($_SERVER['STRIPE_SECRET_KEY']);
         $stripeProduct = $stripe->products->create([
             'name' => $item->getTitle(),
             'description' => $item->getDescription(),
