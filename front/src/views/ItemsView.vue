@@ -7,6 +7,7 @@
             <h1>{{item.title}}</h1>
             <p>{{item.price}}€</p>
             <p>{{item.description}}</p>
+            <p>{{item.name}}</p>
         </div>
         
     </div>
@@ -28,7 +29,7 @@ const getItem = async () => {
     item.value = data;
     const dick = await fetch(toRaw(item.value.itemOwner));
     const d = await dick.json();
-    console.log(d);
+    item.value.name = d.name;
 };
 
 // const myDick() = async => {
