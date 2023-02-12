@@ -9,9 +9,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiProperty;
+
 
 #[ORM\Entity(repositoryClass: ItemsRepository::class)]
-#[ApiResource(normalizationContext: ['groups' => ['items_read']],  denormalizationContext: ['groups' => ['items_write']])]
+#[ApiResource(normalizationContext: ['groups' => ['items_read']])]
 class Items
 {
     #[ORM\Id]
@@ -40,7 +42,7 @@ class Items
     #[ORM\OneToMany(mappedBy: 'items', targetEntity: MediaObject::class)]
     private Collection $images;
 
-    #[Groups(['items_read', 'items_write'])]
+    #[Groups('items_read')]
     #[ORM\ManyToOne(inversedBy: 'ownerItems')]
     private ?User $itemOwner = null;
 

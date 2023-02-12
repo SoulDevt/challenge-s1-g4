@@ -93,10 +93,11 @@ async function addNewAnnonce(event) {
             description: event.target.description.value,
             price: event.target.price.valueAsNumber,
             images: [mediaResponse["@id"]],
-            itemOwner: decoded.id
+            itemOwner:  "/api/users/" + [decoded.id]
         }),
     })
-    .then((response) => response.json())
+    .then((response) => response.json());
+    console.log(annonceResponse);
     // .then(setTimeout(() => {
     //     window.location.href = '/annonces';
     // }, 1000));
