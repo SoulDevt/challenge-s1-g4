@@ -26,11 +26,9 @@ import { useRoute } from "vue-router";
 import { loadStripe } from "@stripe/stripe-js";
 
 const publishableKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
-console.log(publishableKey);
 const stripePromise = loadStripe(publishableKey);
 const successURL = `https://${window.location.host}/success`;
 const cancelURL = `https://${window.location.host}/cancel`;
-console.log(successURL, cancelURL);
 const item = ref([]);
 const lineItems = reactive([
     {

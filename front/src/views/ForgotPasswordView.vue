@@ -40,7 +40,6 @@ async function forgotPassword(event) {
         body: formData,
     });
     const data = await response.json();
-    console.log(data);
 }
 
 onMounted(() => {

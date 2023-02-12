@@ -72,7 +72,6 @@ async function resetPassword(event) {
         }),
     });
     const data = await response.json();
-    console.log(data);
     if (response.ok) {
         await router.push("/login");
     } else {

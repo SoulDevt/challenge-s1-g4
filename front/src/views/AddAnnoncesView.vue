@@ -68,8 +68,12 @@
 import { ENTRYPOINT } from "../../config/entrypoint";
 import { useRouter } from "vue-router";
 import { reactive, ref } from "vue";
-import router from "../router";
+
+const router = useRouter();
 let token = localStorage.getItem("token");
+if (!token) {
+    router.push("/login");
+}
 let files = reactive([]);
 const fd = ref(new FormData());
 async function uploadFile(event) {
@@ -79,7 +83,6 @@ async function uploadFile(event) {
 }
 
 async function addNewAnnonce(event) {
-    console.log(fd.value.get("file"));
     const mediaResponse = await fetch(ENTRYPOINT + "/media_objects", {
         method: "POST",
         headers: {
