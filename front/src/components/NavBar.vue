@@ -111,6 +111,7 @@ if (token) {
     navigation = [
         { name: "Home", href: "/", current: route.name === "home" },
         { name: "Annonces", href: "/annonces", current: route.name === "annonces" },
+        { name: "Demander à être annonceur", href: "/upgrade-vendor", current: route.name === "upgrade-vendor" },
     ];
     let decoded = jwtDecode(token);
     if (decoded.roles.includes("ROLE_ADMIN")) {
@@ -118,7 +119,8 @@ if (token) {
         navigation = [
             { name: "Home", href: "/", current: route.name === "home" },
             { name: "Annonces", href: "/annonces", current: route.name === "annonces" },
-            { name: "Ajouter une enchere", href: "/encheres/create", current: route.name === "encheresCreate" }
+            { name: "Ajouter une enchere", href: "/encheres/create", current: route.name === "encheresCreate" },
+            { name: "Panneau de gestion", href: "/pannel-upgrade-vendor", current: route.name === "pannel-upgrade-vendor" }
         ];
     }
 }

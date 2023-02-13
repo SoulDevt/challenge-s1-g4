@@ -3,6 +3,7 @@
         <DemandsItem v-for="demande in demandes" :key="demande.id" :whoUser="demande.whoUser" :id="demande.id"
             :type="demande.type" :firstname="demande.firstname" :lastname="demande.lastname" :adress="demande.adress"
             :postalcode="demande.postalcode" :phonenumber="demande.phonenumber" :accepted="demande.accepted" />
+        <h1 v-if="demandes.length === 0">Aucune demande pour le moment !</h1>
     </div>
 
 </template>
