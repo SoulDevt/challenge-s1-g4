@@ -51,6 +51,10 @@ class Items
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $stripe_price_id = null;
 
+    #[Groups('items_read')]
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $productId = null;
+
 
     public function __construct()
     {
@@ -164,6 +168,18 @@ class Items
     public function setStripePriceId(?string $stripe_price_id): self
     {
         $this->stripe_price_id = $stripe_price_id;
+
+        return $this;
+    }
+
+    public function getProductId(): ?string
+    {
+        return $this->productId;
+    }
+
+    public function setProductId(?string $productId): self
+    {
+        $this->productId = $productId;
 
         return $this;
     }

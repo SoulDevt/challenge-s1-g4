@@ -41,10 +41,11 @@ final class ItemStripeCreationEventSubscriber implements EventSubscriberInterfac
             'default_price_data' => [
                 'currency' => 'eur',
                 'unit_amount' => $item->getPrice() * 100,
-            ],
+            ]
         ]);
 
         $item->setStripePriceId($stripeProduct->default_price);
+        $item->setProductId($stripeProduct->id);
         $this->entityManager->flush();
 
     }
