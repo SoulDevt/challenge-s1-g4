@@ -15,7 +15,9 @@
             </div>
         </div>
         <div>
-            <label for="description" class="block text-sm font-medium text-white"
+            <label
+                for="description"
+                class="block text-sm font-medium text-white"
                 >Description</label
             >
             <div class="mt-1">
@@ -35,7 +37,7 @@
             <div class="mt-1">
                 <input
                     type="number"
-                    name="price"
+                    name="prix"
                     id="password"
                     class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
@@ -61,7 +63,7 @@
             <div class="mt-1">
                 <input
                     type="text"
-                    name="liens"
+                    name="lien"
                     id="password"
                     class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
@@ -92,22 +94,40 @@
 <script setup>
 import { useUserStore } from "../stores/annonces";
 import jwtDecode from "jwt-decode";
+import { ENTRYPOINT } from "../../config/entrypoint";
+import { useRouter } from "vue-router";
+
+
+const router = useRouter();
+
+const getUser = async () => {
+    let token = localStorage.getItem("token");
+    let decoded = jwtDecode(token);
+    let roles = Object.values(decoded.roles).includes("ROLE_ANNONCEUR")
+
+    if(roles) { 
+        console.log("cet utilisateur est aussi annonceur")
+    } else {
+        router.push('/');
+    }
+};
+getUser();
 
 async function submit(event) {
-    let token = localStorage.getItem('token')
+    let token = localStorage.getItem("token");
     let decoded = jwtDecode(token);
     let author = decoded.id;
-    console.log(author)
+
     const formData = new FormData(event.target);
-     const store = useUserStore();
-     await store.addAnnonce(
-         formData.get("title"),
-         formData.get("description"),
-         parseInt(formData.get("price")),
-         formData.get("image"),
-         formData.get("liens"),
-         formData.get("tags"),
-         author
-     );
+    const store = useUserStore();
+    await store.addAnnonce(
+        formData.get("title"),
+        formData.get("description"),
+        formData.get("prix"),
+        formData.get("image"),
+        formData.get("lien"),
+        formData.get("tags"),
+        author
+    );
 }
 </script>

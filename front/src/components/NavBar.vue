@@ -147,6 +147,7 @@ let isConnected = false;
 let token = localStorage.getItem("token");
 if (token) {
     isConnected = true;
+  
 }
 const route = useRoute();
 const navigation = [

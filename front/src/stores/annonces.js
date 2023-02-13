@@ -4,8 +4,8 @@ import { ref } from "vue";
 
 export const useUserStore = defineStore("annonces", () => {
   const token = ref(null);
-  const addAnnonce = async (title,description,price,image,liens,tags,author) => {
-    const response = await fetch(`${ENTRYPOINT}/annonces_posts`, {
+  const addAnnonce = async (title,description,prix,image,lien,tags,author) => {
+    const response = await fetch(`${ENTRYPOINT}/pubs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -13,15 +13,15 @@ export const useUserStore = defineStore("annonces", () => {
       body: JSON.stringify({
         title,
         description,
-        price,
+        prix,
         image,
-        liens,
+        lien,
         tags,
         author
       }),
     });
     if (response.ok) {
-      console.log("Annonce has been submitted");
+      console.log("pub has been submitted");
       //await login(email, password);
     } else {
       throw new Error(response.statusText);
