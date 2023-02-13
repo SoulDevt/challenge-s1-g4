@@ -12,6 +12,11 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 
 	if [ "$APP_ENV" != 'prod' ]; then
 		composer install --prefer-dist --no-progress --no-interaction
+
+		echo "Making sure public / private keys for JWT exist..."
+		php bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction
+#		setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt
+#		setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt
 	fi
 
 	if grep -q DATABASE_URL= .env; then
@@ -36,8 +41,14 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 			echo "The database is now ready and reachable"
 		fi
 
-		if [ "$( find ./migrations -iname '*.php' -print -quit )" ]; then
-			php bin/console doctrine:migrations:migrate --no-interaction
+#		if [ "$( find ./migrations -iname '*.php' -print -quit )" ]; then
+#			php bin/console doctrine:migrations:migrate --no-interaction
+#		fi
+		php bin/console doctrine:schema:update --force --no-interaction
+
+		if [ "$APP_ENV" != 'prod' ]; then
+			echo "Load fixtures"
+			bin/console doctrine:fixtures:load --no-interaction
 		fi
 	fi
 fi
