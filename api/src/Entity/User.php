@@ -53,9 +53,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $postalCode = null;
 
-    #[ORM\ManyToOne(inversedBy: 'owner')]
-    private ?Items $items = null;
-
     #[ORM\OneToMany(mappedBy: 'sold', targetEntity: Items::class)]
     private Collection $itemsold;
 
@@ -206,18 +203,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPostalCode(?int $postalCode): self
     {
         $this->postalCode = $postalCode;
-
-        return $this;
-    }
-
-    public function getItems(): ?Items
-    {
-        return $this->items;
-    }
-
-    public function setItems(?Items $items): self
-    {
-        $this->items = $items;
 
         return $this;
     }
