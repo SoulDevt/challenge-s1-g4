@@ -45,5 +45,7 @@ jobs:
 #          docker compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
       - name: PHPUnit
         run: docker compose exec -T php bin/phpunit
+#      - name: Playwright
+#        run: docker compose exec -T front npm run test
       - name: Doctrine Schema Validator
         run: docker compose exec -T php bin/console doctrine:schema:validate --skip-sync
