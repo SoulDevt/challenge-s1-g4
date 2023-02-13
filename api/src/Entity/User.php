@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -50,6 +52,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $postalCode = null;
 
+    #[ORM\ManyToOne(inversedBy: 'owner')]
+    private ?Items $items = null;
+
+    #[ORM\OneToMany(mappedBy: 'sold', targetEntity: Items::class)]
+    private Collection $itemsold;
 
     #[ORM\OneToMany(mappedBy: 'whoUser', targetEntity: Demande::class)]
     private Collection $demandes;
@@ -57,10 +64,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Auction::class, orphanRemoval: true)]
     private Collection $auctions;
 
+    #[ORM\OneToMany(mappedBy: 'itemOwner', targetEntity: Items::class)]
+    private Collection $ownerItems;
+
     public function __construct()
     {
+        $this->itemsold = new ArrayCollection();
+        $this->ownerItems = new ArrayCollection();
         $this->demandes = new ArrayCollection();
         $this->auctions = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -229,6 +242,78 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($demande->getWhoUser() === $this) {
                 $demande->setWhoUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getItems(): ?Items
+    {
+        return $this->items;
+    }
+
+    public function setItems(?Items $items): self
+    {
+        $this->items = $items;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Items>
+     */
+    public function getItemsold(): Collection
+    {
+        return $this->itemsold;
+    }
+
+    public function addItemsold(Items $itemsold): self
+    {
+        if (!$this->itemsold->contains($itemsold)) {
+            $this->itemsold->add($itemsold);
+            $itemsold->setSold($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItemsold(Items $itemsold): self
+    {
+        if ($this->itemsold->removeElement($itemsold)) {
+            // set the owning side to null (unless already changed)
+            if ($itemsold->getSold() === $this) {
+                $itemsold->setSold(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Items>
+     */
+    public function getOwnerItems(): Collection
+    {
+        return $this->ownerItems;
+    }
+
+    public function addOwnerItem(Items $ownerItem): self
+    {
+        if (!$this->ownerItems->contains($ownerItem)) {
+            $this->ownerItems->add($ownerItem);
+            $ownerItem->setItemOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOwnerItem(Items $ownerItem): self
+    {
+        if ($this->ownerItems->removeElement($ownerItem)) {
+            // set the owning side to null (unless already changed)
+            if ($ownerItem->getItemOwner() === $this) {
+                $ownerItem->setItemOwner(null);
             }
         }
 
