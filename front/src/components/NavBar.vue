@@ -153,6 +153,8 @@ const navigation = [
     { name: "Home", href: "/", current: route.name === "home" },
     { name: "Login", href: "/login", current: route.name === "login" },
     { name: "Register", href: "/register", current: route.name === "register" },
+    { name: "Demande", href: "/upgrade-vendor", current: route.name === "upgrade-vendor" },
+    { name: "Pannel demande", href: "/pannel-upgrade-vendor", current: route.name === "pannel-upgrade-vendor" },
     { name: "Annonces", href:"/annonces", current: route.name === "annonces"}
 ];
 </script>

@@ -53,6 +53,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $postalCode = null;
 
+    #[ORM\OneToMany(mappedBy: 'whoUser', targetEntity: Demande::class)]
+    private Collection $demandes;
+
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Auction::class, orphanRemoval: true)]
+    private Collection $auctions;
+    
     #[ORM\ManyToOne(inversedBy: 'owner')]
     private ?Items $items = null;
 
@@ -61,6 +67,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
+        $this->demandes = new ArrayCollection();
+        $this->auctions = new ArrayCollection();
         $this->itemsold = new ArrayCollection();
     }
 
@@ -206,6 +214,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return Collection<int, Demande>
+     */
+    public function getDemandes(): Collection
+    {
+        return $this->demandes;
+    }
+
+    public function addDemande(Demande $demande): self
+    {
+        if (!$this->demandes->contains($demande)) {
+            $this->demandes->add($demande);
+            $demande->setWhoUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemande(Demande $demande): self
+    {
+        if ($this->demandes->removeElement($demande)) {
+            // set the owning side to null (unless already changed)
+            if ($demande->getWhoUser() === $this) {
+                $demande->setWhoUser(null);
+            }
+        }
+        return $this;
+    }
+
     public function getItems(): ?Items
     {
         return $this->items;
@@ -214,10 +251,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setItems(?Items $items): self
     {
         $this->items = $items;
-
         return $this;
     }
 
+    /**
+     * @return Collection<int, Auction>
+     */
+    public function getAuctions(): Collection
+    {
+        return $this->auctions;
+    }
+
+    public function addAuction(Auction $auction): self
+    {
+        if (!$this->auctions->contains($auction)) {
+            $this->auctions->add($auction);
+            $auction->setCreator($this);
+        }
+
+        return $this;
+    }
+    
     /**
      * @return Collection<int, Items>
      */
@@ -232,7 +286,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->itemsold->add($itemsold);
             $itemsold->setSold($this);
         }
+        return $this;
+    }
 
+    public function removeAuction(Auction $auction): self
+    {
+        if ($this->auctions->removeElement($auction)) {
+            // set the owning side to null (unless already changed)
+            if ($auction->getCreator() === $this) {
+                $auction->setCreator(null);
+            }
+        }
         return $this;
     }
 
@@ -242,6 +306,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($itemsold->getSold() === $this) {
                 $itemsold->setSold(null);
+
             }
         }
 
