@@ -80,19 +80,6 @@
                 />
             </div>
         </div>
-        <div>
-            <label for="tags" class="block text-sm font-medium text-white"
-                >author</label
-            >
-            <div class="mt-1">
-                <input
-                    type="number"
-                    name="author"
-                    id="password"
-                    class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                />
-            </div>
-        </div>
         <button
             type="submit"
             class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -107,19 +94,20 @@ import { useUserStore } from "../stores/annonces";
 import jwtDecode from "jwt-decode";
 
 async function submit(event) {
-    let decoded = jwtDecode(store.token);
-    console.log(decoded)
+    let token = localStorage.getItem('token')
+    let decoded = jwtDecode(token);
+    let author = [decoded.id];
+    console.log(author)
     const formData = new FormData(event.target);
-    const store = useUserStore();
-    await store.addAnnonce(
-        formData.get("title"),
-        formData.get("description"),
-        parseInt(formData.get("price")),
-        formData.get("image"),
-        formData.get("liens"),
-        formData.get("tags"),
-        formData.get("author")
-    );
-    console.log(store.token);
+     const store = useUserStore();
+     await store.addAnnonce(
+         formData.get("title"),
+         formData.get("description"),
+         parseInt(formData.get("price")),
+         formData.get("image"),
+         formData.get("liens"),
+         formData.get("tags"),
+         author[0]
+     );
 }
 </script>

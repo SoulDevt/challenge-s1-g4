@@ -32,6 +32,7 @@
 import { onBeforeMount, ref } from "vue";
 import {ENTRYPOINT} from "../../config/entrypoint";
 
+
 const items = ref([]);
 
 const getItems = async () => {
