@@ -4,9 +4,6 @@ import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import UpdateUserView from "../views/UpdateUserView.vue";
 import AdminView from "../views/AdminView.vue";
-import UpgradeVendorView from "../views/upgradeVendorView.vue";
-import AdminUpgradeDemandsView from "../views/AdminUpgradeDemandsView.vue";
-import AdminCreateAuctionView from "../views/AdminCreateAuction.vue";
 import ProfilView from "../views/ProfilView.vue";
 import AnnonceView from "../views/AnnonceView.vue";
 import ItemsView from "../views/ItemsView.vue";
@@ -52,30 +49,6 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: UpdateUserView,
-    },
-    {
-      path: "/upgrade-vendor",
-      name: "upgrade-vendor",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: UpgradeVendorView,
-    },
-    {
-      path: "/pannel-upgrade-vendor",
-      name: "pannel-upgrade-vendor",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: AdminUpgradeDemandsView,
-    },
-    {
-      path: "/pannel-create-auction",
-      name: "pannel-create-auction",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: AdminCreateAuctionView,
     },
     {
       path: "/success",
