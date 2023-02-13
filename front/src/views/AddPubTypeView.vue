@@ -96,7 +96,7 @@ import jwtDecode from "jwt-decode";
 async function submit(event) {
     let token = localStorage.getItem('token')
     let decoded = jwtDecode(token);
-    let author = [decoded.id];
+    let author = decoded.id;
     console.log(author)
     const formData = new FormData(event.target);
      const store = useUserStore();
@@ -107,7 +107,7 @@ async function submit(event) {
          formData.get("image"),
          formData.get("liens"),
          formData.get("tags"),
-         author[0]
+         author
      );
 }
 </script>
