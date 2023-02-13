@@ -6,9 +6,27 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\BidRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
+
 
 #[ORM\Entity(repositoryClass: BidRepository::class)]
 #[ApiResource]
+
+
+
+#[Post(
+    security: "is_granted('ROLE_ADMIN')"
+)]
+#[Patch(
+    security: "is_granted('ROLE_ADMIN')"
+)]
+#[Delete(
+    security: "is_granted('ROLE_ADMIN')"
+)]
+
 class Bid
 {
     #[ORM\Id]

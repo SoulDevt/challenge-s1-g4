@@ -10,10 +10,18 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiProperty;
-
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 
 #[ORM\Entity(repositoryClass: ItemsRepository::class)]
 #[ApiResource(normalizationContext: ['groups' => ['items_read']])]
+#[GetCollection]
+#[Get]
+#[Post]
+#[Delete]
 class Items
 {
     #[ORM\Id]
