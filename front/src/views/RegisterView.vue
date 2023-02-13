@@ -61,6 +61,5 @@ async function register(event) {
         formData.get("name"),
         formData.get("password")
     );
-    console.log(store.token);
 }
 </script>
