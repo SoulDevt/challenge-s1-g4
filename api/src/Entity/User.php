@@ -62,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'itemOwner', targetEntity: Items::class)]
     private Collection $ownerItems;
 
-    #[ORM\OneToMany(mappedBy: 'whichUser', targetEntity: Demande::class)]
+    #[ORM\OneToMany(mappedBy: 'whoUser', targetEntity: Demande::class)]
     private Collection $demandes;
 
     public function __construct()
