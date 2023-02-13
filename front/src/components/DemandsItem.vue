@@ -9,8 +9,9 @@
                 <p className="my-auto"> Adresse : {{ adress }}</p>
                 <p className="my-auto">Code postal : {{ postalcode }}</p>
                 <p className="my-auto">Tél : {{ phonenumber }}</p>
+                <p className="my-auto"> : {{ whoUser }}</p>
                 <div className="grid grid-cols-1">
-                    <button @click="updateDemands(id, true)">Accepter</button>
+                    <button @click="updateUser(id, whoUser)">Accepter</button>
                     <button @click="updateDemands(id, false)">Refuser</button>
                 </div>
 
@@ -22,7 +23,25 @@
 
 import { ENTRYPOINT } from "../../config/entrypoint";
 
-const props = defineProps(['id', 'type', 'firstname', 'lastname', 'adress', 'postalcode', 'phonenumber', 'accepted'])
+const props = defineProps(['id', 'type', 'firstname', 'lastname', 'adress', 'postalcode', 'phonenumber', 'accepted', 'whoUser'])
+
+async function updateUser(id, whoUser) {
+    const requestOptions = {
+        method: "PATCH",
+        headers: { "Content-Type": "application/merge-patch+json" },
+        body: JSON.stringify({
+            roles: [
+                "ROLE_USER",
+                "ROLE_ANNONCEUR"
+            ],
+        })
+    };
+    const response = await fetch(ENTRYPOINT + `/users/` + whoUser.substr(11), requestOptions);
+    const data = await response.json();
+    if (data.id) {
+        updateDemands(id, true);
+    }
+}
 
 async function updateDemands(id, status) {
     const requestOptions = {

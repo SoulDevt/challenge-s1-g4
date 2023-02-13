@@ -3,7 +3,7 @@
         <div>
             <label for="lastname" class="block text-sm font-medium text-white">Nom</label>
             <div class="mt-1">
-                <input type="text" name="lastname" id="lastname"
+                <input type="text" name="lastname" id="lastname" required
                     class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     placeholder="Nom" />
             </div>
@@ -11,7 +11,7 @@
         <div>
             <label for="firstname" class="block text-sm font-medium text-white">Prénom</label>
             <div class="mt-1">
-                <input type="text" name="firstname" id="firstname"
+                <input type="text" name="firstname" id="firstname" required
                     class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     placeholder="Prénom" />
             </div>
@@ -19,7 +19,7 @@
         <div>
             <label for="adress" class="block text-sm font-medium text-white">Adresse</label>
             <div class="mt-1">
-                <input type="text" name="adress" id="adress"
+                <input type="text" name="adress" id="adress" required
                     class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     placeholder="Adresse" />
             </div>
@@ -27,7 +27,7 @@
         <div>
             <label for="cp" class="block text-sm font-medium text-white">Code postale</label>
             <div class="mt-1">
-                <input type="text" name="cp" id="cp"
+                <input type="text" name="cp" id="cp" required
                     class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     placeholder="Code postale" />
             </div>
@@ -35,7 +35,7 @@
         <div>
             <label for="tel" class="block text-sm font-medium text-white">N° de Téléphone</label>
             <div class="mt-1">
-                <input type="tel" name="tel" id="tel"
+                <input type="tel" name="tel" id="tel" required
                     class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     placeholder="N° de Téléphone" />
             </div>
@@ -50,7 +50,24 @@
 <script setup>
 
 import { ENTRYPOINT } from "../../config/entrypoint";
+import { ref, onBeforeMount } from 'vue';
 import jwtDecode from "jwt-decode";
+
+
+const demandes = ref([]);
+
+async function getData() {
+    let decoded = jwtDecode(localStorage.getItem("token"));
+    const requestOptions = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    };
+    const response = await fetch(ENTRYPOINT + `/users/${decoded.id}`, requestOptions);
+    const finalRes = await response.json();
+
+    console.log(finalRes.demandes);
+    //demandes.value = finalRes['hydra:member'];
+}
 
 async function askUpgradeVendor(event) {
     const formData = new FormData(event.target);
@@ -75,4 +92,6 @@ async function askUpgradeVendor(event) {
         alert("Votre demande a bien été prise en compte");
     }
 }
+onBeforeMount(() => getData());
+
 </script>
