@@ -11,8 +11,16 @@ import { ENTRYPOINT } from "../../config/entrypoint";
 
 import { ref, onBeforeMount } from 'vue';
 import DemandsItem from "../components/DemandsItem.vue";
+import jwtDecode from "jwt-decode";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const demandes = ref([]);
+
+let decoded = jwtDecode(localStorage.getItem("token"));
+if (decoded.roles.includes("ROLE_ADMIN") === false) {
+    router.push("/");
+}
 
 async function getData() {
     const requestOptions = {

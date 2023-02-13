@@ -45,15 +45,11 @@ async function updateUser(id, whoUser) {
 
 async function updateDemands(id, status) {
     const requestOptions = {
-        method: "PATCH",
-        headers: { "Content-Type": "application/merge-patch+json" },
-        body: JSON.stringify({
-            accepted: status
-        })
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
     };
     const response = await fetch(ENTRYPOINT + `/demandes/` + id, requestOptions);
-    const data = await response.json();
-    if (data.id) {
+    if (response.status === 204) {
         alert("La demande a bien été traitée !");
         window.location.reload();
     }

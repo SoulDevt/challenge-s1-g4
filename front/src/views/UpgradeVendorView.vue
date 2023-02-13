@@ -52,9 +52,9 @@
 import { ENTRYPOINT } from "../../config/entrypoint";
 import { ref, onBeforeMount } from 'vue';
 import jwtDecode from "jwt-decode";
+import { useRouter } from "vue-router";
 
-
-const demandes = ref([]);
+const router = useRouter();
 
 async function getData() {
     let decoded = jwtDecode(localStorage.getItem("token"));
@@ -64,9 +64,9 @@ async function getData() {
     };
     const response = await fetch(ENTRYPOINT + `/users/${decoded.id}`, requestOptions);
     const finalRes = await response.json();
-
-    console.log(finalRes.demandes);
-    //demandes.value = finalRes['hydra:member'];
+    if (finalRes.demandes.length > 0) {
+        router.push('/');
+    }
 }
 
 async function askUpgradeVendor(event) {
@@ -90,6 +90,7 @@ async function askUpgradeVendor(event) {
     const data = await response.json();
     if (data.id) {
         alert("Votre demande a bien été prise en compte");
+        router.push('/');
     }
 }
 onBeforeMount(() => getData());
