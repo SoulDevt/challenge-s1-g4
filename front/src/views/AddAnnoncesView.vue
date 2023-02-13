@@ -67,7 +67,10 @@
 <script setup>
 import { ENTRYPOINT } from "../../config/entrypoint";
 import { useRouter } from "vue-router";
-import { reactive, ref } from "vue";
+import { reactive, ref, toRaw } from "vue";
+
+import jwtDecode from "jwt-decode";
+let decoded = jwtDecode(token);
 
 const router = useRouter();
 let token = localStorage.getItem("token");
@@ -101,7 +104,7 @@ async function addNewAnnonce(event) {
             title: event.target.title.value,
             description: event.target.description.value,
             price: event.target.price.valueAsNumber,
-            images: [mediaResponse["@id"]],
+            images: [mediaResponse["@id"]]
         }),
     });
     if (annonceResponse.ok) {

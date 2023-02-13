@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Delete;
 use App\Controller\CreateMediaObjectAction;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,6 +23,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     types: ['https://schema.org/MediaObject'],
     operations: [
         new Get(),
+        new Delete,
         new GetCollection(),
         new Post(
             controller: CreateMediaObjectAction::class,

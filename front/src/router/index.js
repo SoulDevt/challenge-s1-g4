@@ -11,6 +11,9 @@ import ProfilView from "../views/ProfilView.vue";
 import AnnonceView from "../views/AnnonceView.vue";
 import ItemsView from "../views/ItemsView.vue";
 import AddAnnonceView from "../views/AddAnnoncesView.vue";
+import PaymentSuccessView from "../views/PaymentSuccessView.vue";
+import PaymentCancelView from "../views/PaymentCanceledView.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -137,6 +140,16 @@ const router = createRouter({
       path: '/annonces/create',
       name: 'annonces_new',
       component: AddAnnonceView,
+    },
+    {
+      path: '/success',
+      name: 'success',
+      component: PaymentSuccessView,
+    },
+    {
+      path: '/cancel',
+      name: 'cancel',
+      component: PaymentCancelView,
     },
     {
       path: "/:pathMatch(.*)*",

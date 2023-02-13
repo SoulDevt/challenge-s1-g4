@@ -65,11 +65,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'sold', targetEntity: Items::class)]
     private Collection $itemsold;
 
+    #[ORM\OneToMany(mappedBy: 'itemOwner', targetEntity: Items::class)]
+    private Collection $ownerItems;
+
     public function __construct()
     {
         $this->demandes = new ArrayCollection();
         $this->auctions = new ArrayCollection();
         $this->itemsold = new ArrayCollection();
+        $this->ownerItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -213,7 +217,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
+    
     /**
      * @return Collection<int, Demande>
      */
@@ -307,6 +311,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($itemsold->getSold() === $this) {
                 $itemsold->setSold(null);
 
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Items>
+     */
+    public function getOwnerItems(): Collection
+    {
+        return $this->ownerItems;
+    }
+
+    public function addOwnerItem(Items $ownerItem): self
+    {
+        if (!$this->ownerItems->contains($ownerItem)) {
+            $this->ownerItems->add($ownerItem);
+            $ownerItem->setItemOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOwnerItem(Items $ownerItem): self
+    {
+        if ($this->ownerItems->removeElement($ownerItem)) {
+            // set the owning side to null (unless already changed)
+            if ($ownerItem->getItemOwner() === $this) {
+                $ownerItem->setItemOwner(null);
             }
         }
 

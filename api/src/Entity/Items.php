@@ -9,6 +9,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiProperty;
+
 
 #[ORM\Entity(repositoryClass: ItemsRepository::class)]
 #[ApiResource(normalizationContext: ['groups' => ['items_read']])]
@@ -32,9 +34,6 @@ class Items
     #[ORM\Column(nullable: true)]
     private ?int $price = null;
 
-    #[ORM\OneToMany(mappedBy: 'items', targetEntity: User::class)]
-    private Collection $owner;
-
     #[Groups('items_read')]
     #[ORM\ManyToOne(inversedBy: 'itemsold')]
     private ?User $sold = null;
@@ -44,8 +43,13 @@ class Items
     private Collection $images;
 
     #[Groups('items_read')]
+
+    #[ORM\ManyToOne(inversedBy: 'ownerItems')]
+    private ?User $itemOwner = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $stripe_price_id = null;
+
 
     public function __construct()
     {
@@ -97,32 +101,6 @@ class Items
     /**
      * @return Collection<int, User>
      */
-    public function getOwner(): Collection
-    {
-        return $this->owner;
-    }
-
-    public function addOwner(User $owner): self
-    {
-        if (!$this->owner->contains($owner)) {
-            $this->owner->add($owner);
-            $owner->setItems($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOwner(User $owner): self
-    {
-        if ($this->owner->removeElement($owner)) {
-            // set the owning side to null (unless already changed)
-            if ($owner->getItems() === $this) {
-                $owner->setItems(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getSold(): ?User
     {
@@ -163,6 +141,17 @@ class Items
             }
         }
 
+        return $this;
+    }
+
+    public function getItemOwner(): ?User
+    {
+        return $this->itemOwner;
+    }
+
+    public function setItemOwner(?User $itemOwner): self
+    {
+        $this->itemOwner = $itemOwner;
         return $this;
     }
 
