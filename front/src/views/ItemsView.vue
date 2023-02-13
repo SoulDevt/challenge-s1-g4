@@ -26,7 +26,10 @@
         </div>
     </div>
     <div>
-
+        <button @click="buy"
+            class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Pay now!
+        </button>
     </div>
 </template>
 
@@ -34,7 +37,7 @@
 import jwtDecode from "jwt-decode";
 import { onBeforeMount, ref, reactive, toRaw } from "vue";
 import { ENTRYPOINT } from "../../config/entrypoint";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { loadStripe } from "@stripe/stripe-js";
 
 const publishableKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
@@ -50,6 +53,7 @@ const lineItems = reactive([
     },
 ]);
 const route = useRoute();
+const router = useRouter();
 let token = localStorage.getItem("token");
 let decodedToken = '';
 
@@ -112,9 +116,9 @@ async function deleleteItem() {
             },
         });
     })
-        .then(function () {
-            window.location.href = "/";
-        });
+    .then(function () {
+            router.push("/");
+    });
 }
 
 
