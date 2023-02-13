@@ -75,6 +75,16 @@ const router = createRouter({
       component: AdminCreateAuctionView,
     },
     {
+      path: "/success",
+      name: "stripe-success",
+      component: () => import("../views/StripeSuccessView.vue"),
+    },
+    {
+      path: "/cancel",
+      name: "stripe-cancel",
+      component: () => import("../views/StripeCancelView.vue"),
+    },
+    {
       path: "/forgot-password",
       name: "forgot-password",
       component: () => import("../views/ForgotPasswordView.vue"),
