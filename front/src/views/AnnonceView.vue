@@ -1,9 +1,13 @@
-
 <template>
     <div class="bg-white" >
         <div class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
             <h2 class="text-2xl font-bold tracking-tight text-gray-900">Annonces</h2>
-            <a href="/annonces/create" style="color:black;">Ajouter une annonce</a>
+            <RouterLink
+                v-if="token !== null"
+                to="/annonces/create"
+                class="text-black"
+                >Ajouter une annonce</RouterLink
+            >
             <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 <div v-if="items.length > 0">
                     <div v-for="item in items" :key="item.id" class="group relative">
@@ -15,7 +19,10 @@
                                 <h3 class="text-sm text-gray-700">
                                     <!-- a href with item.id as param -->
                                     <a :href="'/annonces/' + item.id">
-                                        <span aria-hidden="true" class="absolute inset-0" />
+                                    <span
+                                        aria-hidden="true"
+                                        class="absolute inset-0"
+                                    />
                                         {{ item.title }}
                                     </a>
                                 </h3>
@@ -27,25 +34,23 @@
                 <div v-else>
                     <p class="text-black">Pas d'annonces !</p>
                 </div>
-                
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { onBeforeMount, ref, toRaw } from "vue";
-import {ENTRYPOINT} from "../../config/entrypoint";
+import { onBeforeMount, ref } from "vue";
+import { ENTRYPOINT } from "../../config/entrypoint";
+
+const token = ref(localStorage.getItem("token"));
 
 const items = ref([]);
 
 const getItems = async () => {
-    const response = await fetch(
-        ENTRYPOINT + "/items"
-    );
+    const response = await fetch(ENTRYPOINT + "/items");
     const data = await response.json();
     items.value = data["hydra:member"];
-    console.log(toRaw(items.value));
 };
 
 onBeforeMount(getItems);

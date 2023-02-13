@@ -20,25 +20,40 @@
             </div>
         </div>
     </div>
-
+    <div>
+        <button
+            @click="buy"
+            class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+            Pay now!
+        </button>
+    </div>
 </template>
 
 <script setup>
-import { onBeforeMount, ref } from "vue";
+import jwtDecode from "jwt-decode";
+import { onBeforeMount, ref, reactive, toRaw } from "vue";
 import { ENTRYPOINT } from "../../config/entrypoint";
 import { useRoute } from "vue-router";
-import { toRaw } from "vue";
-import jwtDecode from "jwt-decode";
+import { loadStripe } from "@stripe/stripe-js";
 
+const publishableKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
+const stripePromise = loadStripe(publishableKey);
+const successURL = `https://${window.location.host}/success`;
+const cancelURL = `https://${window.location.host}/cancel`;
 const item = ref([]);
+const lineItems = reactive([
+    {
+        price: "",
+        quantity: 1,
+    },
+]);
 const route = useRoute();
 let token = localStorage.getItem("token");
 let decodedToken = '';
 
 const getItem = async () => {
-    const response = await fetch(
-        ENTRYPOINT + "/items/" + route.params.id
-    );
+    const response = await fetch(ENTRYPOINT + "/items/" + route.params.id);
     const data = await response.json();
     item.value = data;
     if (token === null || token === undefined || token === "") {
@@ -49,14 +64,28 @@ const getItem = async () => {
         item.value.name = ownerItem.name;
         item.value.email = ownerItem.email;
         item.value.mediaObjectId = data.images[0]["@id"];
+        lineItems[0].price = data["stripe_price_id"];
         if (decodedToken.username === ownerItem.email) {
             item.value.isOwner = true;
         } else {
             item.value.isOwner = false;
         }
     }
-
 };
+
+async function buy() {
+    const stripe = await stripePromise;
+    const { error } = await stripe.redirectToCheckout({
+        mode: "payment",
+        lineItems: lineItems,
+        successUrl: successURL,
+        cancelUrl: cancelURL,
+    });
+    if (error) {
+        console.error("Error:", error);
+    }
+}
+
 onBeforeMount(getItem);
 
 
@@ -90,9 +119,6 @@ async function deleleteItem() {
 
 </script>
 
-
-
-
 <style>
 .allItems {
     display: flex;
@@ -101,7 +127,6 @@ async function deleleteItem() {
     margin: 0 auto;
     width: 80%;
 }
-
 .left,
 .right {
     width: 50%;
@@ -166,4 +191,3 @@ async function deleleteItem() {
     overflow: hidden;
 }
 </style>
-

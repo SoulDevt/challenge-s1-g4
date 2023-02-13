@@ -3,7 +3,7 @@
     <form @submit.prevent="addNewAnnonce($event)">
         <div>
             <label for="title" class="block text-sm font-medium text-white"
-            >Titre</label
+                >Titre</label
             >
             <div class="mt-1">
                 <input
@@ -15,16 +15,22 @@
             </div>
         </div>
         <div>
-            <label for="description" class="block text-sm font-medium text-white"
-            >Description</label
+            <label
+                for="description"
+                class="block text-sm font-medium text-white"
+                >Description</label
             >
             <div class="mt-1">
-                <textarea name="description" id="description" class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+                <textarea
+                    name="description"
+                    id="description"
+                    class="block w-full rounded-md border-gray-300 text-gray-800 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                ></textarea>
             </div>
         </div>
         <div>
             <label for="price" class="block text-sm font-medium text-white"
-            >Prix</label
+                >Prix</label
             >
             <div class="mt-1">
                 <input
@@ -37,7 +43,7 @@
         </div>
         <div>
             <label for="pictures" class="block text-sm font-medium text-white"
-            >images</label
+                >images</label
             >
             <div class="mt-1">
                 <input
@@ -59,12 +65,18 @@
 </template>
 
 <script setup>
-import {ENTRYPOINT} from "../../config/entrypoint";
-import { reactive, toRaw, ref } from "vue";
+import { ENTRYPOINT } from "../../config/entrypoint";
+import { useRouter } from "vue-router";
+import { reactive, ref, toRaw } from "vue";
+
 import jwtDecode from "jwt-decode";
-let token = localStorage.getItem("token");
 let decoded = jwtDecode(token);
 
+const router = useRouter();
+let token = localStorage.getItem("token");
+if (!token) {
+    router.push("/login");
+}
 let files = reactive([]);
 const fd = ref(new FormData());
 async function uploadFile(event) {
@@ -94,10 +106,9 @@ async function addNewAnnonce(event) {
             price: event.target.price.valueAsNumber,
             images: [mediaResponse["@id"]]
         }),
-    })
-    .then((response) => response.json())
-    .then(setTimeout(() => {
-        window.location.href = '/annonces';
-    }, 1000));
+    });
+    if (annonceResponse.ok) {
+        await router.push("/annonces");
+    }
 }
 </script>

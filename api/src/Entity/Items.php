@@ -43,8 +43,13 @@ class Items
     private Collection $images;
 
     #[Groups('items_read')]
+
     #[ORM\ManyToOne(inversedBy: 'ownerItems')]
     private ?User $itemOwner = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $stripe_price_id = null;
+
 
     public function __construct()
     {
@@ -147,6 +152,17 @@ class Items
     public function setItemOwner(?User $itemOwner): self
     {
         $this->itemOwner = $itemOwner;
+        return $this;
+    }
+
+    public function getStripePriceId(): ?string
+    {
+        return $this->stripe_price_id;
+    }
+
+    public function setStripePriceId(?string $stripe_price_id): self
+    {
+        $this->stripe_price_id = $stripe_price_id;
 
         return $this;
     }
