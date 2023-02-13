@@ -15,7 +15,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ApiResource]
-
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -59,6 +58,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'sold', targetEntity: Items::class)]
     private Collection $itemsold;
 
+    #[ORM\OneToMany(mappedBy: 'whoUser', targetEntity: Demande::class)]
+    private Collection $demandes;
+
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Auction::class, orphanRemoval: true)]
+    private Collection $auctions;
+
     #[ORM\OneToMany(mappedBy: 'itemOwner', targetEntity: Items::class)]
     private Collection $ownerItems;
 
@@ -66,6 +71,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->itemsold = new ArrayCollection();
         $this->ownerItems = new ArrayCollection();
+        $this->demandes = new ArrayCollection();
+        $this->auctions = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -210,6 +218,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return Collection<int, Demande>
+     */
+    public function getDemandes(): Collection
+    {
+        return $this->demandes;
+    }
+
+    public function addDemande(Demande $demande): self
+    {
+        if (!$this->demandes->contains($demande)) {
+            $this->demandes->add($demande);
+            $demande->setWhoUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemande(Demande $demande): self
+    {
+        if ($this->demandes->removeElement($demande)) {
+            // set the owning side to null (unless already changed)
+            if ($demande->getWhoUser() === $this) {
+                $demande->setWhoUser(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function getItems(): ?Items
     {
         return $this->items;
@@ -276,6 +314,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($ownerItem->getItemOwner() === $this) {
                 $ownerItem->setItemOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Auction>
+     */
+    public function getAuctions(): Collection
+    {
+        return $this->auctions;
+    }
+
+    public function addAuction(Auction $auction): self
+    {
+        if (!$this->auctions->contains($auction)) {
+            $this->auctions->add($auction);
+            $auction->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuction(Auction $auction): self
+    {
+        if ($this->auctions->removeElement($auction)) {
+            // set the owning side to null (unless already changed)
+            if ($auction->getCreator() === $this) {
+                $auction->setCreator(null);
             }
         }
 

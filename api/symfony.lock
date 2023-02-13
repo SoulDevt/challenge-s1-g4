@@ -361,18 +361,6 @@
     "symfony/http-kernel": {
         "version": "v6.0.2"
     },
-    "symfony/mailer": {
-        "version": "6.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "4.3",
-            "ref": "2bf89438209656b85b9a49238c4467bff1b1f939"
-        },
-        "files": [
-            "config/packages/mailer.yaml"
-        ]
-    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -497,15 +485,6 @@
     "symfony/security-http": {
         "version": "v6.0.2"
     },
-    "symfony/sendinblue-mailer": {
-        "version": "6.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "5.2",
-            "ref": "ae1cf494ce06b9a4578a8445c610402a1676ee8d"
-        }
-    },
     "symfony/serializer": {
         "version": "v6.0.2"
     },
@@ -574,42 +553,8 @@
     "symfony/yaml": {
         "version": "v6.0.2"
     },
-    "symfonycasts/reset-password-bundle": {
-        "version": "1.16",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "1.0",
-            "ref": "97c1627c0384534997ae1047b93be517ca16de43"
-        },
-        "files": [
-            "config/packages/reset_password.yaml"
-        ]
-    },
-    "tilleuls/forgot-password-bundle": {
-        "version": "1.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "1.0",
-            "ref": "48ab9b5581997a68245b79ac21e355152e29fcde"
-        },
-        "files": [
-            "config/packages/coop_tilleuls_forgot_password.yaml",
-            "config/routes/coop_tilleuls_forgot_password.yaml"
-        ]
-    },
     "twig/twig": {
         "version": "v3.3.7"
-    },
-    "vich/uploader-bundle": {
-        "version": "2.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "1.13",
-            "ref": "1b3064c2f6b255c2bc2f56461aaeb76b11e07e36"
-        }
     },
     "webmozart/assert": {
         "version": "1.10.0"
