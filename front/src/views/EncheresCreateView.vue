@@ -34,9 +34,12 @@
 <script setup>
 import { ENTRYPOINT } from "../../config/entrypoint";
 import jwtDecode from "jwt-decode";
+import { useRoute, useRouter } from "vue-router";
+
 let isAdmin = false;
 let token = localStorage.getItem("token");
 let decoded = jwtDecode(token);
+const router = useRouter();
 
 if (decoded.roles.includes("ROLE_ADMIN")) {
     isAdmin = true;
