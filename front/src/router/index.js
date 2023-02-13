@@ -11,7 +11,7 @@ import AddAnnonceView from "../views/AddAnnoncesView.vue";
 import PaymentSuccessView from "../views/PaymentSuccessView.vue";
 import PaymentCancelView from "../views/PaymentCanceledView.vue";
 import EncheresCreateView from "../views/EncheresCreateView.vue";
-import UpgradeVendorView from "../views/upgradeVendorView.vue";
+import UpgradeVendorView from "../views/UpgradeVendorView.vue";
 import AdminUpgradeDemandsView from "../views/AdminUpgradeDemandsView.vue";
 
 const router = createRouter({
