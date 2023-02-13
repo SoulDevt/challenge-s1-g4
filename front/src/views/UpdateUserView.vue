@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="login($event)" class="flex flex-col gap-5">
+    <form @submit.prevent="updateUser($event)" class="flex flex-col gap-5">
         <div>
             <label for="email" class="block text-sm font-medium text-white"
                 >Email</label
@@ -52,11 +52,23 @@
 
 <script setup>
 import { useUserStore } from "../stores/user";
+import { useRoute } from 'vue-router';
+import { ref } from "vue";
+const route = useRoute();
+const idUser = ref(null)
+idUser.value = route.params.id
 
-async function login(event) {
-    const formData = new FormData(event.target);
-    const store = useUserStore();
-    await store.login(formData.get("email"), formData.get("password"));
-    console.log(store.token);
-}
+
+    async function updateUser(event) {
+        const formData = new FormData(event.target);
+        const store = useUserStore();
+        await store.updateUser(
+            formData.get("email"),
+            formData.get("name"),
+            formData.get("password"),
+            idUser.value
+        );
+        console.log(store.token);
+    }
+
 </script>
