@@ -10,7 +10,7 @@ import ItemsView from "../views/ItemsView.vue";
 import AddAnnonceView from "../views/AddAnnoncesView.vue";
 import PaymentSuccessView from "../views/PaymentSuccessView.vue";
 import PaymentCancelView from "../views/PaymentCanceledView.vue";
-
+import EncheresCreateView from "../views/EncheresCreateView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -125,10 +125,16 @@ const router = createRouter({
       component: PaymentCancelView,
     },
     {
+      path: '/encheres/create',
+      name: 'encheres_create',
+      component: EncheresCreateView,
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "not-found",
       component: () => import("../views/NotFoundView.vue"),
     },
+    
 
   ],
 });

@@ -46,6 +46,7 @@ final class ItemStripeCreationEventSubscriber implements EventSubscriberInterfac
 
         $item->setStripePriceId($stripeProduct->default_price);
         $item->setProductId($stripeProduct->id);
+        
         $this->entityManager->flush();
 
     }

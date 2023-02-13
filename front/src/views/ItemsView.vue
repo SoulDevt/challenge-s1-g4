@@ -8,7 +8,12 @@
             <p>{{ item.price }}€</p>
             <p>{{ item.description }}</p>
             <p>{{ item.name }}</p>
-            <button v-if="item.isOwner" @click="showPopup">Supprimer mon annonce</button>
+            <button v-if="item.isOwner" @click="buy"
+                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                Acheter
+            </button>
+            <br/>
+            <button class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" v-if="item.isOwner" @click="showPopup">Supprimer mon annonce</button>
         </div>
 
         <div v-if="item.isOwner">
@@ -21,10 +26,7 @@
         </div>
     </div>
     <div>
-        <button @click="buy"
-            class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-            Pay now!
-        </button>
+
     </div>
 </template>
 
@@ -110,9 +112,9 @@ async function deleleteItem() {
             },
         });
     })
-    .then(function () {
-        window.location.href = "/";
-    });
+        .then(function () {
+            window.location.href = "/";
+        });
 }
 
 
