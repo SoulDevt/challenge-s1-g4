@@ -22,6 +22,10 @@ services:
       MERCURE_URL: ${CADDY_MERCURE_URL:-http://caddy/.well-known/mercure}
       MERCURE_PUBLIC_URL: https://${SERVER_NAME:-localhost}/.well-known/mercure
       MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      APP_ENV: ${APP_ENV:-dev}
 
   front:
     build:
@@ -29,6 +33,9 @@ services:
       target: prod
     environment:
       VITE_PUBLIC_ENTRYPOINT: http://caddy/api
+      VITE_STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
+      VITE_STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      VITE_SERVER_NAME: ${SERVER_NAME:-localhost}
 
   caddy:
     build:
