@@ -47,6 +47,7 @@ class Items
     #[ORM\ManyToOne(inversedBy: 'ownerItems')]
     private ?User $itemOwner = null;
 
+    #[Groups('items_read')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $stripe_price_id = null;
 

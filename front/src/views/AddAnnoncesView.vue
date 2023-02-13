@@ -70,10 +70,11 @@ import { useRouter } from "vue-router";
 import { reactive, ref, toRaw } from "vue";
 
 import jwtDecode from "jwt-decode";
-let decoded = jwtDecode(token);
+
 
 const router = useRouter();
 let token = localStorage.getItem("token");
+let decoded = jwtDecode(token);
 if (!token) {
     router.push("/login");
 }
