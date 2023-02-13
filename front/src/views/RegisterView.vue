@@ -28,6 +28,8 @@
             Register
         </button>
     </form>
+
+    
 </template>
 
 <script setup>
