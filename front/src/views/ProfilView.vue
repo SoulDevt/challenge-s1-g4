@@ -1,38 +1,40 @@
 <template>
+
+
+
     <form @submit.prevent="editUser(idUser)" class="flex flex-col gap-5">
-        <div>
-            <label for="email" class="block text-sm font-medium text-white"
-                >Email</label
-            >
-            <div class="mt-1">
-                <p>{{email}}</p>
-            </div>
-        </div>
+    <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg font-medium leading-6 text-gray-900">Applicant Information</h3>
+    <p class="mt-1 max-w-2xl text-sm text-gray-500">Personal details and application.</p>
+  </div>
+  <div class="border-t border-gray-200">
+    <dl>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Full name</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{name}}</dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Application for</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">Backend Developer</dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Email address</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{email}}</dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Role</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ roles }}</dd>
+      </div>
 
-        <div>
-            <label for="password" class="block text-sm font-medium text-white"
-                >Name</label
-            >
-            <div class="mt-1">
-                <p>{{ name }}</p>
-            </div>
-        </div>
-        <div>
-            <label for="password" class="block text-sm font-medium text-white"
-                >Role</label
-            >
-            <div class="mt-1">
-                <p>{{ roles }}</p>
-            </div>
-        </div>
 
-        <button
-            type="submit"
-            class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        >
-            Modifier
-        </button>
-    </form>
+    </dl>
+  </div>
+  <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+            <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Modifier</button>
+          </div>
+</div>
+</form>
 </template>
 
 <script setup>
