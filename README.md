@@ -8,10 +8,21 @@
 
 ## Installation
 
+Créez un fichier `.env` puis mettez-y les deux valeurs suivantes:
+
+```
+STRIPE_PUBLIC_KEY=""
+STRIPE_SECRET_KEY=""
+```
+
+Puis exécutez en local:
+
 ```bash
 docker compose build --pull --no-cache
 docker compose up -d
 ```
+
+Informations pour la bdd
 
 ```bash
 adminer : PostgreSQL
@@ -29,3 +40,4 @@ docker-compose exec php bin/console make:migration
 docker-compose exec php bin/console doctrine:migrations:migrate
 docker compose exec php bin/console d:f:l
 ```
+
