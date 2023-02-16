@@ -15,10 +15,6 @@ class Demande
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'demandes')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $whoUser = null;
-
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
@@ -40,21 +36,13 @@ class Demande
     #[ORM\Column(length: 255)]
     private ?string $phonenumber = null;
 
+    #[ORM\ManyToOne(inversedBy: 'demandes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $whoUser = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getWhoUser(): ?User
-    {
-        return $this->whoUser;
-    }
-
-    public function setWhoUser(?User $whoUser): self
-    {
-        $this->whoUser = $whoUser;
-
-        return $this;
     }
 
     public function getType(): ?string
@@ -137,6 +125,18 @@ class Demande
     public function setPhonenumber(string $phonenumber): self
     {
         $this->phonenumber = $phonenumber;
+
+        return $this;
+    }
+
+    public function getWhoUser(): ?User
+    {
+        return $this->whoUser;
+    }
+
+    public function setWhoUser(?User $whoUser): self
+    {
+        $this->whoUser = $whoUser;
 
         return $this;
     }

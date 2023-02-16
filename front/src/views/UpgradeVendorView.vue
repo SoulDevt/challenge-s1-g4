@@ -64,6 +64,7 @@ async function getData() {
     };
     const response = await fetch(ENTRYPOINT + `/users/${decoded.id}`, requestOptions);
     const finalRes = await response.json();
+    console.log(finalRes);
     if (finalRes.demandes.length > 0) {
         router.push('/');
     }
