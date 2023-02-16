@@ -120,7 +120,8 @@ if (token) {
             { name: "Home", href: "/", current: route.name === "home" },
             { name: "Annonces", href: "/annonces", current: route.name === "annonces" },
             { name: "Ajouter une enchere", href: "/encheres/create", current: route.name === "encheresCreate" },
-            { name: "Panneau de gestion", href: "/pannel-upgrade-vendor", current: route.name === "pannel-upgrade-vendor" }
+            { name: "Panneau de gestion", href: "/pannel-upgrade-vendor", current: route.name === "pannel-upgrade-vendor" },
+            { name: "Déposer une publicité", href: "/pubs", current: route.name === "addpub" }
         ];
     }
 }

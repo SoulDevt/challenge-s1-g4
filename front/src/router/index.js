@@ -6,6 +6,7 @@ import UpdateUserView from "../views/UpdateUserView.vue";
 import AdminView from "../views/AdminView.vue";
 import ProfilView from "../views/ProfilView.vue";
 import AnnonceView from "../views/AnnonceView.vue";
+import AddPubView from "../views/AddPubView.vue";
 import ItemsView from "../views/ItemsView.vue";
 import AddAnnonceView from "../views/AddAnnoncesView.vue";
 import PaymentSuccessView from "../views/PaymentSuccessView.vue";
@@ -115,6 +116,11 @@ const router = createRouter({
       path: '/annonces/create',
       name: 'annonces_new',
       component: AddAnnonceView,
+    },
+    {
+      path: '/pubs',
+      name: 'addpub',
+      component: AddPubView,
     },
     {
       path: '/success',
